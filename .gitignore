@@ -1,4 +1,11 @@
-dist
+#files
 package-lock.json
+
+
+#folders
+node_modules
+dist
 .Trash
+ideas
+
 
