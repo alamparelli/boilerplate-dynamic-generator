@@ -2,15 +2,15 @@ import { readdirSync, readFileSync } from 'node:fs';
 import path from 'path';
 import express from 'express';
 
+const configPath = './src/boilerplate/boilerplateConfig.json';
 const templatesArray = [];
 const app = express();
+const fullPage = readFileSync('./src/public/index.html', 'utf-8');
 
 try {
-	var boilerplateConfig = JSON.parse(
-		readFileSync('./src/boilerplate/boilerplateConfig.json', 'utf8')
-	);
+	var boilerplateConfig = JSON.parse(readFileSync(configPath, 'utf8'));
 } catch (error) {
-	console.log(`${boilerplateConfigPath} not found`);
+	console.log(`${configPath} not found`);
 }
 
 try {
@@ -28,12 +28,13 @@ try {
 	console.error('Error reading directory:', err);
 }
 
-templatesArray.forEach((element) => {
-	console.log(element.filename);
-});
-
-app.use('/', (req, res) => {
-	res.send(fullPage);
+app.use('/', async (req, res) => {
+	let content = '';
+	templatesArray.forEach((element) => {
+		content = content + readFileSync(element.html, 'utf-8');
+	});
+	let tempFullPage = await fullPage.replace('<BODYGENERATOR>', content);
+	res.send(tempFullPage);
 });
 
 app.listen(3000, () => {
