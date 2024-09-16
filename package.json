@@ -12,22 +12,18 @@
 		"url": "https://github.com/alamparelli/boilerplate-dynamic-generator/issues"
 	},
 	"devDependencies": {
-		"coffeescript": "^2.7.0",
 		"eslint": "^7.32.0",
-		"npm-run-all": "^4.1.5",
-		"prettier": "github:helixbass/prettier#prettier-v2.1.0-dev.100-gitpkg",
-		"prettier-plugin-coffeescript": "^0.1.5"
+		"prettier": "github:helixbass/prettier#prettier-v2.1.0-dev.100-gitpkg"
 	},
 	"dependencies": {
 		"bootstrap": "^5.3.3",
+		"express": "^4.21.0",
 		"gulpfile": "^1.0.2",
 		"nodemon": "^3.1.4"
 	},
 	"license": "GPL-3.0-only",
 	"type": "module",
 	"scripts": {
-		"coffee": "coffee --watch --compile --output dist/ src/",
-		"start": "npm run coffee && nodemon src/app.js",
-		"dev": "npm-run-all --parallel start coffee"
+		"start": "nodemon ./src/app.js"
 	}
 }
