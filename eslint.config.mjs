@@ -4,6 +4,7 @@ import perfectionistAlphabetical from 'eslint-plugin-perfectionist/configs/recom
 import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import { fixupPluginRules } from '@eslint/compat';
+import coffee from 'eslint-plugin-coffee';
 
 export default [
 	perfectionistAlphabetical,
