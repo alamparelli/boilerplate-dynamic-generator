@@ -37,6 +37,4 @@ app.use('/', async (req, res) => {
 	res.send(tempFullPage);
 });
 
-app.listen(3000, () => {
-	console.log('listen to port 3000');
-});
+app.listen(3000, () => {});
