@@ -1,0 +1,13 @@
+{
+	"filename": "frontend",
+	"name": "Zeta Jhone",
+	"age": 30,
+	"email": "johndoe@example.com",
+	"address": {
+		"street": "1234 Elm Street",
+		"city": "Somewhere",
+		"postalCode": "12345"
+	},
+	"hobbies": ["reading", "cycling", "swimming"],
+	"active": true
+}
