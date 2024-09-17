@@ -1,4 +1,5 @@
 {
 	"filename": "frontend",
-	"html": "./src/templates/frontend.html"
+	"html": "./src/templates/frontend.html",
+	"position": 1
 }

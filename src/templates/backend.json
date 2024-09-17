@@ -1,4 +1,5 @@
 {
 	"filename": "backend",
-	"html": "./src/templates/backend.html"
+	"html": "./src/templates/backend.html",
+	"position": 2
 }

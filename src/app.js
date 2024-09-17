@@ -35,15 +35,37 @@ const readTemplatesConfig = () => {
 const buildUI = async () => {
 	const fullPage = readFileSync('./src/public/index.html', 'utf-8');
 	const templatesArray = readTemplatesConfig();
+
+	templatesArray.sort((a, b) => a.position - b.position);
+
+	let sections = '';
 	let content = '';
+	let tempMENU = '';
+	let tempFullPage = '';
+
+	templatesArray.forEach((element) => {
+		sections =
+			sections +
+			`<div><a href="#${element.filename}" class="text-primary fs-5 my-2">${
+				element.filename.charAt(0).toUpperCase() +
+				element.filename.slice(1).toLowerCase()
+			}</a></div>`;
+	});
+
 	templatesArray.forEach((element) => {
 		content = content + readFileSync(element.html, 'utf-8');
 	});
-	let tempFullPage = await fullPage.replace('<BODYGENERATOR>', content);
+	tempMENU = await fullPage.replace('<MENUGENERATOR>', sections);
+	tempFullPage = await tempMENU.replace('<BODYGENERATOR>', content);
 	return tempFullPage;
 };
 
 const appUI = await buildUI();
+
+app.post('/submit-form', (req, res) => {
+	console.log(req.body);
+	res.json(req.body);
+});
 
 app.use('/', async (req, res) => {
 	res.send(appUI);
