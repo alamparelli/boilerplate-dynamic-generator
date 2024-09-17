@@ -2,39 +2,51 @@ import { readdirSync, readFileSync } from 'node:fs';
 import path from 'path';
 import express from 'express';
 
-const configPath = './src/boilerplate/boilerplateConfig.json';
-const templatesArray = [];
 const app = express();
-const fullPage = readFileSync('./src/public/index.html', 'utf-8');
 
-try {
-	var boilerplateConfig = JSON.parse(readFileSync(configPath, 'utf8'));
-} catch (error) {
-	console.log(`${configPath} not found`);
-}
+const readBoilerplateConfig = () => {
+	const configPath = './src/boilerplate/boilerplateConfig.json';
+	try {
+		var boilerplateConfig = JSON.parse(readFileSync(configPath, 'utf8'));
+	} catch (error) {
+		console.log(`${configPath} not found`);
+	}
+	return boilerplateConfig;
+};
 
-try {
-	const files = readdirSync(boilerplateConfig.base.template);
-	files.forEach((file) => {
-		if (path.extname(file) === '.json') {
-			templatesArray.push(
-				JSON.parse(
-					readFileSync(path.join(boilerplateConfig.base.template, file), 'utf8')
-				)
-			);
-		}
-	});
-} catch (err) {
-	console.error('Error reading directory:', err);
-}
+const readTemplatesConfig = () => {
+	const templatePath = readBoilerplateConfig().base.template;
+	const templatesArray = [];
+	try {
+		const files = readdirSync(templatePath);
+		files.forEach((file) => {
+			if (path.extname(file) === '.json') {
+				templatesArray.push(
+					JSON.parse(readFileSync(path.join(templatePath, file), 'utf8'))
+				);
+			}
+		});
+	} catch (err) {
+		console.error('Error reading directory:', err);
+	}
+	return templatesArray;
+};
 
-app.use('/', async (req, res) => {
+const buildUI = async () => {
+	const fullPage = readFileSync('./src/public/index.html', 'utf-8');
+	const templatesArray = readTemplatesConfig();
 	let content = '';
 	templatesArray.forEach((element) => {
 		content = content + readFileSync(element.html, 'utf-8');
 	});
 	let tempFullPage = await fullPage.replace('<BODYGENERATOR>', content);
-	res.send(tempFullPage);
+	return tempFullPage;
+};
+
+const appUI = await buildUI();
+
+app.use('/', async (req, res) => {
+	res.send(appUI);
 });
 
 app.listen(3000, () => {});
