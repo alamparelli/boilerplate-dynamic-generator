@@ -9,5 +9,10 @@
 			"esmodule": { "type": "module" },
 			"commonjs": { "type": "commonjs" }
 		}
+	},
+	"selectLanguage": {
+		"code": {
+			"cmd1": "nothing to do"
+		}
 	}
 }

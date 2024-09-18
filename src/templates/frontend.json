@@ -1,5 +1,18 @@
 {
 	"filename": "frontend",
 	"html": "./src/templates/frontend.html",
-	"position": 1
+	"position": 1,
+	"selectFrontend": {
+		"path": "",
+		"dest": "npm",
+		"code": {
+			"reactjs": {
+				"cmd1": "npx create-react-app my-app-name",
+				"cmd2": "eslint-plugin-react-hooks eslint-plugin-react @eslint/compat react react-router-dom"
+			},
+			"angular": {
+				"cmd1": "nothing to do"
+			}
+		}
+	}
 }

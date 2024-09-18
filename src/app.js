@@ -1,6 +1,8 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import path from 'path';
 import express from 'express';
+import { writeJson } from './generator/generateJson.js';
+import { extractParameters, parseKeys } from './generator/generator.js';
 
 const app = express();
 
@@ -65,9 +67,10 @@ const appUI = await buildUI();
 app.use(express.urlencoded({ extended: true }));
 
 app.post('/submit-form', (req, res) => {
-	console.log(req.body);
-	res.send('BoilerPlate Generated');
-	// res.status(200).json(req.body);
+	const instructions = parseKeys(req.body, readTemplatesConfig());
+
+	// res.send('BoilerPlate Generated');
+	res.status(200).json(instructions);
 });
 
 app.use('/', async (req, res) => {
