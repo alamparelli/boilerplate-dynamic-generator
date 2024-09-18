@@ -1,6 +1,29 @@
 <div class="row">
 	<div class="col-md-12">
 		<h2 id="setup">Setup Project Section</h2>
+		<h3>Module</h3>
+		<div class="form-check">
+			<input
+				class="form-check-input option"
+				type="radio"
+				name="selectModule"
+				id="esmodule"
+				value="esmodule"
+				checked
+			/>
+			<label class="form-check-label" for="esmodule"> ES Modules </label>
+		</div>
+		<div class="form-check">
+			<input
+				class="form-check-input option"
+				type="radio"
+				name="selectModule"
+				id="commonjs"
+				value="commonjs"
+			/>
+			<label class="form-check-label" for="commonjs">CommonJS Modules</label>
+		</div>
+		<h3>Language</h3>
 		<div class="form-check">
 			<input
 				class="form-check-input option"
@@ -8,7 +31,6 @@
 				name="selectLanguage"
 				id="typescript"
 				value="typescript"
-				checked
 			/>
 			<label class="form-check-label" for="typescript">Typescript</label>
 		</div>
@@ -19,6 +41,7 @@
 				name="selectLanguage"
 				id="javascript"
 				value="javascript"
+				checked
 			/>
 			<label class="form-check-label" for="javascript"> JavaScript </label>
 		</div>

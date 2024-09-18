@@ -32,9 +32,9 @@
 					<MENUGENERATOR>
 				  </div>
 				  <div class="col-md-7">
-					<form action="/submit-form" method="post">
+					<form action="/submit-form" method="post" onsubmit="return confirmSubmission()">
 						<BODYGENERATOR>
-						  <input type="submit" value="Create Boilerplate" />
+						<input type="submit" value="Create Boilerplate" />
 					</form>
 				  </div>
 				</div>
@@ -64,6 +64,10 @@
 				behavior: 'smooth'
 			  });
 			});
+
+			// function confirmSubmission() {
+			// 	return confirm("Are you sure you want to submit?");
+			// }
 		  </script>
 	</body>
 </html>

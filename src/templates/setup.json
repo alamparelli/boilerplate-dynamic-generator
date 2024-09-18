@@ -1,5 +1,13 @@
 {
 	"filename": "setup",
 	"html": "./src/templates/setup.html",
-	"position": 0
+	"position": 0,
+	"selectModule": {
+		"path": "./src/package.json",
+		"dest": "json",
+		"code": {
+			"esmodule": { "type": "module" },
+			"commonjs": { "type": "commonjs" }
+		}
+	}
 }

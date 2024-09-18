@@ -62,9 +62,12 @@ const buildUI = async () => {
 
 const appUI = await buildUI();
 
+app.use(express.urlencoded({ extended: true }));
+
 app.post('/submit-form', (req, res) => {
 	console.log(req.body);
-	res.json(req.body);
+	res.send('BoilerPlate Generated');
+	// res.status(200).json(req.body);
 });
 
 app.use('/', async (req, res) => {

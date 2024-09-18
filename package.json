@@ -22,8 +22,8 @@
 		"nodemon": "^3.1.4"
 	},
 	"license": "GPL-3.0-only",
-	"type": "module",
 	"scripts": {
 		"start": "nodemon ./src/app.js"
-	}
+	},
+	"type": "module"
 }
