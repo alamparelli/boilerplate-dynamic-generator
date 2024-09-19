@@ -5,13 +5,14 @@
 	"selectModule": {
 		"path": "./src/package.json",
 		"dest": "json",
-		"code": {
-			"esmodule": { "type": "module" },
-			"commonjs": { "type": "commonjs" }
-		}
+		"esmodule": { "type": "module" },
+		"commonjs": { "type": "commonjs" }
 	},
 	"selectLanguage": {
-		"code": {
+		"typescript": {
+			"cmd1": "nothing to do"
+		},
+		"javascript": {
 			"cmd1": "nothing to do"
 		}
 	}
