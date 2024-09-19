@@ -67,10 +67,7 @@ const appUI = await buildUI();
 app.use(express.urlencoded({ extended: true }));
 
 app.post('/submit-form', (req, res) => {
-	console.log(req.body);
 	const instructions = parseKeys(req.body, readTemplatesConfig());
-	console.log('instr', instructions);
-
 	const boilerWorkingFolder = readBoilerplateConfig().base.boilerWorkingFolder;
 
 	buildBoilerplate(instructions, boilerWorkingFolder);

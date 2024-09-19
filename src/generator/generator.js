@@ -14,9 +14,10 @@ const extractParameters = (array, option) => {
 	return instruction;
 };
 
-export const parseKeys = (bodyKeys, array) => {
+export const parseKeys = (body, array) => {
 	// from Form passed /submit-form
-	const keys = Object.keys(bodyKeys);
+	console.log(body);
+	const keys = Object.keys(body);
 	const instructions = [];
 	keys.forEach((element) => {
 		instructions.push({ [element]: extractParameters(array, element) });
@@ -31,10 +32,10 @@ const BoilerWorkingFolder = async (currPath, workingFolder) => {
 };
 
 const runJsonConfig = (setup) => {
-	console.log(setup);
+	// console.log(setup);
 };
 const runCommandConfig = (setup) => {
-	console.log(setup);
+	// console.log(setup);
 };
 
 export const buildBoilerplate = async (instructions, boilerWorkingFolder) => {
