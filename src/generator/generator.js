@@ -3,12 +3,15 @@ import fs from 'fs/promises';
 import path from 'path';
 import { exec } from 'child_process';
 
-const extractParameters = (array, option) => {
+const extractParameters = (array, key, value) => {
 	// from boilerplat config Array
 	let instruction = {};
 	array.forEach((element) => {
-		if (element[option]) {
-			instruction = element[option];
+		if (element[key]) {
+			let path = element[key].path;
+			let dest = element[key].dest;
+			let operations = element[key][value];
+			instruction = { path, dest, operations };
 		}
 	});
 	return instruction;
@@ -16,12 +19,11 @@ const extractParameters = (array, option) => {
 
 export const parseKeys = (body, array) => {
 	// from Form passed /submit-form
-	console.log(body);
-	const keys = Object.keys(body);
 	const instructions = [];
-	keys.forEach((element) => {
-		instructions.push({ [element]: extractParameters(array, element) });
-	});
+
+	for (const [key, value] of Object.entries(body)) {
+		instructions.push({ [key]: extractParameters(array, key, value) });
+	}
 	return instructions;
 };
 
@@ -41,7 +43,7 @@ const runCommandConfig = (setup) => {
 export const buildBoilerplate = async (instructions, boilerWorkingFolder) => {
 	const currPath = await process.cwd();
 	const workingDir = await BoilerWorkingFolder(currPath, boilerWorkingFolder);
-	//move to workingfolder
+	// move to workingfolder
 	await process.chdir(workingDir);
 	// console.log('before', process.cwd());
 
