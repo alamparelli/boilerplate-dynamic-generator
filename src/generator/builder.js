@@ -13,10 +13,14 @@ const BoilerWorkingFolder = async (currPath, workingFolder) => {
 };
 
 const runJsonConfig = async (setup, workingDir) => {
-	if (!fs.existsSync(setup.path)) {
+	let filePath = path.join(workingDir, setup.path);
+
+	if (!fs.existsSync(filePath)) {
 		await runCommandConfig(setup.pathNotExist, workingDir);
+	} else {
 	}
-	let file = await JSON.parse(readFileSync(setup.path, 'utf8'));
+
+	let file = await JSON.parse(readFileSync(filePath, 'utf8'));
 	const [operationKey, operationValue] = await Object.entries(
 		setup.operations
 	)[0];
@@ -25,9 +29,9 @@ const runJsonConfig = async (setup, workingDir) => {
 		file[operationKey] = operationValue;
 		return file;
 	};
-	file = await writeOperation(file);
 
-	fs.writeFileSync(setup.path, JSON.stringify(file, null, 2), 'utf-8');
+	file = await writeOperation(file);
+	fs.writeFileSync(filePath, JSON.stringify(file, null, 2), 'utf-8');
 
 	// verify if file exist
 	// verify if content to be added exist

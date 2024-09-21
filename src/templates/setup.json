@@ -3,7 +3,7 @@
 	"html": "./src/templates/setup.html",
 	"position": 0,
 	"selectModule": {
-		"path": "./boilerWorkingFolder/package.json",
+		"path": "package.json",
 		"pathNotExist": ["npm init -y"],
 		"dest": "json",
 		"esmodule": { "type": "module" },
