@@ -1,8 +1,9 @@
-import { readdirSync, readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'fs';
 import path from 'path';
 import express from 'express';
 import { writeJson } from './generator/generateJson.js';
-import { parseKeys, buildBoilerplate } from './generator/generator.js';
+import { parseKeys } from './generator/generator.js';
+import { buildBoilerplate } from './generator/builder.js';
 
 const app = express();
 

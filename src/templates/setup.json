@@ -3,17 +3,14 @@
 	"html": "./src/templates/setup.html",
 	"position": 0,
 	"selectModule": {
-		"path": "./src/package.json",
+		"path": "./boilerWorkingFolder/package.json",
+		"pathNotExist": ["npm init -y"],
 		"dest": "json",
 		"esmodule": { "type": "module" },
 		"commonjs": { "type": "commonjs" }
 	},
 	"selectLanguage": {
-		"typescript": {
-			"cmd1": "nothing to do"
-		},
-		"javascript": {
-			"cmd1": "nothing to do"
-		}
+		"typescript": ["echo 'nothing to do for typescript'"],
+		"javascript": ["echo 'nothing to do for javascript'"]
 	}
 }

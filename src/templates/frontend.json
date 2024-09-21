@@ -5,12 +5,10 @@
 	"selectFrontend": {
 		"path": "",
 		"dest": "npm",
-		"reactjs": {
-			"cmd1": "npx create-react-app my-app-name",
-			"cmd2": "npm install eslint-plugin-react-hooks eslint-plugin-react @eslint/compat react react-router-dom"
-		},
-		"angular": {
-			"cmd1": "nothing to do"
-		}
+		"reactjs": [
+			"npx create-react-app .",
+			"npm install eslint-plugin-react-hooks eslint-plugin-react @eslint/compat react react-router-dom"
+		],
+		"angular": ["echo 'nothing to do for Angular'"]
 	}
 }
