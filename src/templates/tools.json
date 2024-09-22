@@ -1,0 +1,16 @@
+{
+	"filename": "tools",
+	"html": "./src/templates/tools.html",
+	"position": 3,
+	"selectNodemon": {
+		"path": "",
+		"dest": "npm",
+		"selectNodemon": ["npm install nodemon"]
+	},
+	"selectNodemonIgnoreFile": {
+		"path": "",
+		"dest": "file",
+		"fileSource": "./src/templates/nodemon/nodemon.json",
+		"fileDest": "nodemon.json"
+	}
+}

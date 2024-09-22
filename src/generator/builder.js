@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs, { copyFileSync } from 'fs';
 import { readFileSync } from 'fs';
 import path from 'path';
 import { exec } from 'child_process';
@@ -14,8 +14,10 @@ const BoilerWorkingFolder = async (currPath, workingFolder) => {
 
 const runJsonConfig = async (setup, workingDir) => {
 	let filePath = path.join(workingDir, setup.path);
-	if (!fs.existsSync(filePath)) {
-		await runCommandConfig(setup.pathNotExist, workingDir);
+	if (setup.pathNotExist) {
+		if (!fs.existsSync(filePath)) {
+			await runCommandConfig(setup.pathNotExist, workingDir);
+		}
 	}
 
 	setTimeout(async () => {
@@ -24,7 +26,7 @@ const runJsonConfig = async (setup, workingDir) => {
 			file[key] = value;
 		});
 		fs.writeFileSync(filePath, JSON.stringify(file, null, 2), 'utf-8');
-	}, 1000);
+	}, 3600);
 };
 
 const runCommandConfig = async (setup, workingDir) => {
@@ -34,15 +36,17 @@ const runCommandConfig = async (setup, workingDir) => {
 	});
 };
 
-const runCopyFile = async (setup, workingDir) => {
+const runCopyFile = (setup, workingDir) => {
 	console.log(setup);
+	console.log(process.cwd());
+	copyFileSync(setup.fileSource, path.join(workingDir, setup.fileDest));
 };
 
 export const buildBoilerplate = async (instructions, boilerWorkingFolder) => {
 	const currPath = await process.cwd();
 	const workingDir = await BoilerWorkingFolder(currPath, boilerWorkingFolder);
 	// move to workingfolder
-	process.chdir(workingDir);
+	//process.chdir(workingDir);
 
 	instructions.forEach((element) => {
 		const keys = Object.keys(element);
@@ -55,6 +59,9 @@ export const buildBoilerplate = async (instructions, boilerWorkingFolder) => {
 				case 'npm':
 					await runCommandConfig(instruction.operations, workingDir);
 					break;
+				case 'file':
+					runCopyFile(instruction, workingDir);
+					break;
 				default:
 					await runCommandConfig(instruction.operations, workingDir);
 					break;
@@ -63,5 +70,5 @@ export const buildBoilerplate = async (instructions, boilerWorkingFolder) => {
 	});
 
 	//move back to initial folder
-	process.chdir(currPath);
+	// process.chdir(currPath);
 };

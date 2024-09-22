@@ -7,13 +7,22 @@ const extractParameters = (array, key, value) => {
 			let pathNotExist = element[key].pathNotExist;
 			let dest = element[key].dest;
 			let operations = element[key][value] || element[key].default;
+			let fileSource = element[key].fileSource;
+			let fileDest = element[key].fileDest;
 			if (element[key].default) {
 				let defaultObj = element[key].default;
 				Object.entries(defaultObj).forEach(([defKey, defValue]) => {
 					operations = { [defKey]: value };
 				});
 			}
-			instruction = { path, pathNotExist, dest, operations };
+			instruction = {
+				path,
+				pathNotExist,
+				dest,
+				fileDest,
+				fileSource,
+				operations,
+			};
 		}
 	});
 	return instruction;
