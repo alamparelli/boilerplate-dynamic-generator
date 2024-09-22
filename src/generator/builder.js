@@ -1,8 +1,8 @@
 import fs from 'fs';
+import { readFileSync } from 'fs';
 import path from 'path';
 import { exec } from 'child_process';
 import util from 'util';
-import { readFileSync } from 'fs';
 
 const execPromise = util.promisify(exec);
 
@@ -14,31 +14,17 @@ const BoilerWorkingFolder = async (currPath, workingFolder) => {
 
 const runJsonConfig = async (setup, workingDir) => {
 	let filePath = path.join(workingDir, setup.path);
-
 	if (!fs.existsSync(filePath)) {
 		await runCommandConfig(setup.pathNotExist, workingDir);
-	} else {
 	}
 
-	let file = await JSON.parse(readFileSync(filePath, 'utf8'));
-	const [operationKey, operationValue] = await Object.entries(
-		setup.operations
-	)[0];
-
-	const writeOperation = async (file) => {
-		file[operationKey] = operationValue;
-		return file;
-	};
-
-	file = await writeOperation(file);
-	fs.writeFileSync(filePath, JSON.stringify(file, null, 2), 'utf-8');
-
-	// verify if file exist
-	// verify if content to be added exist
-	// >> if not added, add and save file back
-	// >> if exist, check if the same, modify it and save back
-
-	// if command exist, run runCOmmandCOnfig(cmd, workingfolder)
+	setTimeout(async () => {
+		let file = await JSON.parse(readFileSync(filePath, 'utf8'));
+		Object.entries(setup.operations).forEach(([key, value]) => {
+			file[key] = value;
+		});
+		fs.writeFileSync(filePath, JSON.stringify(file, null, 2), 'utf-8');
+	}, 1000);
 };
 
 const runCommandConfig = async (setup, workingDir) => {
@@ -48,12 +34,15 @@ const runCommandConfig = async (setup, workingDir) => {
 	});
 };
 
+const runCopyFile = async (setup, workingDir) => {
+	console.log(setup);
+};
+
 export const buildBoilerplate = async (instructions, boilerWorkingFolder) => {
 	const currPath = await process.cwd();
 	const workingDir = await BoilerWorkingFolder(currPath, boilerWorkingFolder);
 	// move to workingfolder
-	await process.chdir(workingDir);
-	// console.log('before', process.cwd());
+	process.chdir(workingDir);
 
 	instructions.forEach((element) => {
 		const keys = Object.keys(element);
@@ -74,6 +63,5 @@ export const buildBoilerplate = async (instructions, boilerWorkingFolder) => {
 	});
 
 	//move back to initial folder
-	await process.chdir(currPath);
-	// console.log('after', process.cwd());
+	process.chdir(currPath);
 };

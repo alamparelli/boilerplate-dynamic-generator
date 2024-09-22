@@ -70,7 +70,6 @@ app.use(express.urlencoded({ extended: true }));
 app.post('/submit-form', (req, res) => {
 	const instructions = parseKeys(req.body, readTemplatesConfig());
 	const boilerWorkingFolder = readBoilerplateConfig().base.boilerWorkingFolder;
-
 	buildBoilerplate(instructions, boilerWorkingFolder);
 	// res.send('BoilerPlate Generated');
 	res.status(200).json(instructions);

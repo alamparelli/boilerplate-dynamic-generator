@@ -9,6 +9,24 @@
 		"esmodule": { "type": "module" },
 		"commonjs": { "type": "commonjs" }
 	},
+	"projectName": {
+		"path": "package.json",
+		"pathNotExist": ["npm init -y"],
+		"dest": "json",
+		"default": { "name": "boilerplate" }
+	},
+	"projectAuthor": {
+		"path": "package.json",
+		"pathNotExist": ["npm init -y"],
+		"dest": "json",
+		"default": { "author": "Jhon" }
+	},
+	"authorEmail": {
+		"path": "package.json",
+		"pathNotExist": ["npm init -y"],
+		"dest": "json",
+		"default": { "email": "jhon@doe.com" }
+	},
 	"selectLanguage": {
 		"typescript": ["echo 'nothing to do for typescript'"],
 		"javascript": ["echo 'nothing to do for javascript'"]
