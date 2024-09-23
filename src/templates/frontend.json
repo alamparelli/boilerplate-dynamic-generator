@@ -1,10 +1,9 @@
 {
 	"filename": "frontend",
 	"html": "./src/templates/frontend.html",
-	"position": 1,
+	"position": 0,
 	"selectFrontend": {
 		"path": "",
-		"dest": "npm",
 		"reactjs": [
 			"npx create-react-app .",
 			"npm install eslint-plugin-react-hooks eslint-plugin-react @eslint/compat react react-router-dom"

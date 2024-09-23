@@ -1,7 +1,7 @@
 {
 	"filename": "setup",
 	"html": "./src/templates/setup.html",
-	"position": 0,
+	"position": 1,
 	"selectModule": {
 		"path": "package.json",
 		"pathNotExist": ["npm init -y"],
@@ -11,20 +11,20 @@
 	},
 	"projectName": {
 		"path": "package.json",
-		"pathNotExist": ["npm init -y"],
 		"dest": "json",
+		"pathNotExist": ["npm init -y"],
 		"default": { "name": "boilerplate" }
 	},
 	"projectAuthor": {
 		"path": "package.json",
-		"pathNotExist": ["npm init -y"],
 		"dest": "json",
+		"pathNotExist": ["npm init -y"],
 		"default": { "author": "Jhon" }
 	},
 	"authorEmail": {
 		"path": "package.json",
-		"pathNotExist": ["npm init -y"],
 		"dest": "json",
+		"pathNotExist": ["npm init -y"],
 		"default": { "email": "jhon@doe.com" }
 	},
 	"selectLanguage": {

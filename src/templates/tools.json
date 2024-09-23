@@ -4,7 +4,6 @@
 	"position": 3,
 	"selectNodemon": {
 		"path": "",
-		"dest": "npm",
 		"selectNodemon": ["npm install nodemon"]
 	},
 	"selectNodemonIgnoreFile": {
