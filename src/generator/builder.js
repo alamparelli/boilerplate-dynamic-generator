@@ -1,73 +1,107 @@
-import fs, { copyFileSync } from 'fs';
-import { readFileSync } from 'fs';
+import fs, { copyFile, readFileSync } from 'fs';
 import path from 'path';
 import { exec } from 'child_process';
-import util from 'util';
+import { promisify } from 'util';
 
-const execPromise = util.promisify(exec);
+const execPromise = promisify(exec);
+const copyFilePromise = promisify(copyFile);
+
+const queueCommandArray = [];
+const queueFileArray = [];
+const queueJsonArray = [];
 
 const BoilerWorkingFolder = async (currPath, workingFolder) => {
 	const workingDir = path.join(currPath, workingFolder);
-	// await fs.mkdir(workingDir, { recursive: true });
 	return workingDir;
 };
 
-const runJsonConfig = async (setup, workingDir) => {
-	let filePath = path.join(workingDir, setup.path);
-	if (setup.pathNotExist) {
-		if (!fs.existsSync(filePath)) {
-			await runCommandConfig(setup.pathNotExist, workingDir);
+const runJsonConfigSequentially = async (setups, workingDir) => {
+	for (const jsonConfig of setups) {
+		let filePath = path.join(workingDir, jsonConfig.path);
+
+		try {
+			let file = await JSON.parse(readFileSync(filePath, 'utf8'));
+			Object.entries(jsonConfig.operations).forEach(([key, value]) => {
+				file[key] = value;
+			});
+			fs.writeFileSync(filePath, JSON.stringify(file, null, 2), 'utf-8');
+		} catch (error) {
+			console.log(error);
+		}
+	}
+};
+
+const runCopyFileSequentially = async (files, queueJsonArray, workingDir) => {
+	for (const file of files) {
+		try {
+			await copyFilePromise(
+				file.fileSource,
+				path.join(workingDir, file.fileDest)
+			);
+		} catch (error) {
+			console.error(error);
 		}
 	}
 
-	setTimeout(async () => {
-		let file = await JSON.parse(readFileSync(filePath, 'utf8'));
-		Object.entries(setup.operations).forEach(([key, value]) => {
-			file[key] = value;
-		});
-		fs.writeFileSync(filePath, JSON.stringify(file, null, 2), 'utf-8');
-	}, 3600);
+	runJsonConfigSequentially(queueJsonArray, workingDir);
 };
 
-const runCommandConfig = async (setup, workingDir) => {
-	setup.forEach(async (value) => {
-		const { stdout, stderr } = await execPromise(value, { cwd: workingDir });
-		console.log(`Outcome : ${stdout}`);
-	});
-};
+const runCommandsSequentially = async (
+	commands,
+	queueFileArray,
+	queueJsonArray,
+	workingDir
+) => {
+	for (const command of commands) {
+		try {
+			const { stdout, stderr } = await execPromise(command, {
+				cwd: workingDir,
+			});
+			console.log(stdout);
+			if (stderr) {
+				console.error(stderr);
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	}
 
-const runCopyFile = (setup, workingDir) => {
-	console.log(setup);
-	console.log(process.cwd());
-	copyFileSync(setup.fileSource, path.join(workingDir, setup.fileDest));
+	runCopyFileSequentially(queueFileArray, queueJsonArray, workingDir);
 };
 
 export const buildBoilerplate = async (instructions, boilerWorkingFolder) => {
-	const currPath = await process.cwd();
+	const currPath = process.cwd();
 	const workingDir = await BoilerWorkingFolder(currPath, boilerWorkingFolder);
 	// move to workingfolder
 	//process.chdir(workingDir);
 
-	instructions.forEach((element) => {
-		const keys = Object.keys(element);
+	for (let instruction of instructions) {
+		const keys = Object.keys(instruction);
 		keys.forEach(async (key) => {
-			const instruction = element[key];
-			switch (instruction.dest) {
+			const element = instruction[key];
+			switch (element.dest) {
 				case 'json':
-					await runJsonConfig(instruction, workingDir);
+					queueJsonArray.push(element);
 					break;
 				case 'npm':
-					await runCommandConfig(instruction.operations, workingDir);
+					queueCommandArray.push(element.operations);
 					break;
 				case 'file':
-					runCopyFile(instruction, workingDir);
+					queueFileArray.push(element);
 					break;
 				default:
-					await runCommandConfig(instruction.operations, workingDir);
+					queueCommandArray.push(element.operations);
 					break;
 			}
 		});
-	});
+	}
+
+	runCommandsSequentially(
+		queueCommandArray,
+		queueFileArray,
+		queueJsonArray,
+		workingDir
+	);
 
 	//move back to initial folder
 	// process.chdir(currPath);

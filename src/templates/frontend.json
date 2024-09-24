@@ -4,10 +4,9 @@
 	"position": 0,
 	"selectFrontend": {
 		"path": "",
-		"reactjs": [
-			"npx create-react-app .",
-			"npm install eslint-plugin-react-hooks eslint-plugin-react @eslint/compat react react-router-dom"
-		],
-		"angular": ["echo 'nothing to do for Angular'"]
+		"dest": "npm",
+		"reactjs": "npx create-react-app . && npm install eslint-plugin-react-hooks eslint-plugin-react @eslint/compat react react-router-dom",
+		"angular": "echo 'nothing to do for Angular'",
+		"noFrontend": "npm init -y"
 	}
 }

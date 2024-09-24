@@ -4,7 +4,6 @@
 	"position": 1,
 	"selectModule": {
 		"path": "package.json",
-		"pathNotExist": ["npm init -y"],
 		"dest": "json",
 		"esmodule": { "type": "module" },
 		"commonjs": { "type": "commonjs" }
@@ -12,23 +11,20 @@
 	"projectName": {
 		"path": "package.json",
 		"dest": "json",
-		"pathNotExist": ["npm init -y"],
 		"default": { "name": "boilerplate" }
 	},
 	"projectAuthor": {
 		"path": "package.json",
 		"dest": "json",
-		"pathNotExist": ["npm init -y"],
 		"default": { "author": "Jhon" }
 	},
 	"authorEmail": {
 		"path": "package.json",
 		"dest": "json",
-		"pathNotExist": ["npm init -y"],
 		"default": { "email": "jhon@doe.com" }
 	},
 	"selectLanguage": {
-		"typescript": ["echo 'nothing to do for typescript'"],
-		"javascript": ["echo 'nothing to do for javascript'"]
+		"typescript": "echo 'nothing to do for typescript'",
+		"javascript": "echo 'nothing to do for javascript'"
 	}
 }
