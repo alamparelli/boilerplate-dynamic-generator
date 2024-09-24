@@ -2,15 +2,24 @@
 	"filename": "tools",
 	"html": "./src/templates/tools.html",
 	"position": 3,
-	"selectNodemon": {
-		"path": "",
-		"dest": "npm",
-		"selectNodemon": "npm install nodemon"
-	},
-	"selectNodemonIgnoreFile": {
-		"path": "",
-		"dest": "file",
-		"fileSource": "./src/templates/nodemon/nodemon.json",
-		"fileDest": "nodemon.json"
+	"addNodemon": {
+		"run": ["npm init -y", "npm install nodemon"],
+		"file": [
+			{
+				"fileSource": "./src/templates/nodemon/nodemon.json",
+				"fileDest": "nodemon.json"
+			}
+		],
+		"json": [
+			{
+				"path": "package.json",
+				"content": {
+					"scripts": {
+						"dev": "nodemon index.js",
+						"start": "node index.js"
+					}
+				}
+			}
+		]
 	}
 }

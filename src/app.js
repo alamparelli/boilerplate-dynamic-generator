@@ -58,8 +58,8 @@ const buildUI = async () => {
 	templatesArray.forEach((element) => {
 		content = content + readFileSync(element.html, 'utf-8');
 	});
-	tempMENU = await fullPage.replace('<MENUGENERATOR>', sections);
-	tempFullPage = await tempMENU.replace('<BODYGENERATOR>', content);
+	tempMENU = fullPage.replace('<MENUGENERATOR>', sections);
+	tempFullPage = tempMENU.replace('<BODYGENERATOR>', content);
 	return tempFullPage;
 };
 
@@ -70,8 +70,7 @@ app.use(express.urlencoded({ extended: true }));
 app.post('/submit-form', (req, res) => {
 	const instructions = parseKeys(req.body, readTemplatesConfig());
 	const boilerWorkingFolder = readBoilerplateConfig().base.boilerWorkingFolder;
-	buildBoilerplate(instructions, boilerWorkingFolder);
-	// res.send('BoilerPlate Generated');
+	//buildBoilerplate(instructions, boilerWorkingFolder);
 	res.status(200).json(instructions);
 });
 

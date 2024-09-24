@@ -3,28 +3,44 @@
 	"html": "./src/templates/setup.html",
 	"position": 1,
 	"selectModule": {
-		"path": "package.json",
-		"dest": "json",
-		"esmodule": { "type": "module" },
-		"commonjs": { "type": "commonjs" }
+		"json": {
+			"path": "package.json",
+			"esmodule": {
+				"type": "module"
+			},
+			"commonjs": {
+				"type": "commonjs"
+			}
+		}
 	},
 	"projectName": {
-		"path": "package.json",
-		"dest": "json",
-		"default": { "name": "boilerplate" }
+		"json": {
+			"path": "package.json",
+			"default": {
+				"name": "boilerplate"
+			}
+		}
 	},
 	"projectAuthor": {
-		"path": "package.json",
-		"dest": "json",
-		"default": { "author": "Jhon" }
+		"json": {
+			"path": "package.json",
+			"default": {
+				"author": "Jhon"
+			}
+		}
 	},
 	"authorEmail": {
-		"path": "package.json",
-		"dest": "json",
-		"default": { "email": "jhon@doe.com" }
+		"json": {
+			"path": "package.json",
+			"default": {
+				"email": "jhon@doe.com"
+			}
+		}
 	},
 	"selectLanguage": {
-		"typescript": "echo 'nothing to do for typescript'",
-		"javascript": "echo 'nothing to do for javascript'"
+		"run": [
+			"echo 'nothing to do for typescript'",
+			"echo 'nothing to do for javascript'"
+		]
 	}
 }

@@ -10,48 +10,13 @@ const queueCommandArray = [];
 const queueFileArray = [];
 const queueJsonArray = [];
 
-const BoilerWorkingFolder = async (currPath, workingFolder) => {
-	const workingDir = path.join(currPath, workingFolder);
-	return workingDir;
-};
-
-const runJsonConfigSequentially = async (setups, workingDir) => {
-	for (const jsonConfig of setups) {
-		let filePath = path.join(workingDir, jsonConfig.path);
-
-		try {
-			let file = await JSON.parse(readFileSync(filePath, 'utf8'));
-			Object.entries(jsonConfig.operations).forEach(([key, value]) => {
-				file[key] = value;
-			});
-			fs.writeFileSync(filePath, JSON.stringify(file, null, 2), 'utf-8');
-		} catch (error) {
-			console.log(error);
-		}
-	}
-};
-
-const runCopyFileSequentially = async (files, queueJsonArray, workingDir) => {
-	for (const file of files) {
-		try {
-			await copyFilePromise(
-				file.fileSource,
-				path.join(workingDir, file.fileDest)
-			);
-		} catch (error) {
-			console.error(error);
-		}
-	}
-
-	runJsonConfigSequentially(queueJsonArray, workingDir);
-};
-
 const runCommandsSequentially = async (
 	commands,
 	queueFileArray,
 	queueJsonArray,
 	workingDir
 ) => {
+	// Command Configs
 	for (const command of commands) {
 		try {
 			const { stdout, stderr } = await execPromise(command, {
@@ -66,43 +31,67 @@ const runCommandsSequentially = async (
 		}
 	}
 
-	runCopyFileSequentially(queueFileArray, queueJsonArray, workingDir);
+	//File Copy
+	for (const file of queueFileArray) {
+		try {
+			await copyFilePromise(
+				file.fileSource,
+				path.join(workingDir, file.fileDest)
+			);
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
+	// JSON configs
+	for (const jsonConfig of queueJsonArray) {
+		let filePath = path.join(workingDir, jsonConfig.path);
+		try {
+			let file = await JSON.parse(readFileSync(filePath, 'utf8'));
+			Object.entries(jsonConfig.operations).forEach(([key, value]) => {
+				file[key] = value;
+			});
+			fs.writeFileSync(filePath, JSON.stringify(file, null, 2), 'utf-8');
+		} catch (error) {
+			console.log(error);
+		}
+	}
 };
 
-export const buildBoilerplate = async (instructions, boilerWorkingFolder) => {
-	const currPath = process.cwd();
-	const workingDir = await BoilerWorkingFolder(currPath, boilerWorkingFolder);
-	// move to workingfolder
-	//process.chdir(workingDir);
+export const buildBoilerplate = (instructions, boilerWorkingFolder) => {
+	const workingDir = path.join(process.cwd(), boilerWorkingFolder);
 
 	for (let instruction of instructions) {
 		const keys = Object.keys(instruction);
-		keys.forEach(async (key) => {
+		keys.forEach((key) => {
 			const element = instruction[key];
-			switch (element.dest) {
-				case 'json':
-					queueJsonArray.push(element);
-					break;
-				case 'npm':
-					queueCommandArray.push(element.operations);
-					break;
-				case 'file':
-					queueFileArray.push(element);
-					break;
-				default:
-					queueCommandArray.push(element.operations);
-					break;
-			}
+			console.log(element);
+			// 	switch (element.dest) {
+			// 		case 'json':
+			// 			queueJsonArray.push(element);
+			// 			break;
+			// 		case 'run':
+			// 			queueCommandArray.push(element.operations);
+			// 			break;
+			// 		case 'file':
+			// 			queueFileArray.push(element);
+			// 			break;
+			// 		default:
+			// 			break;
+			// 	}
 		});
 	}
 
+	/*
 	runCommandsSequentially(
 		queueCommandArray,
 		queueFileArray,
 		queueJsonArray,
 		workingDir
 	);
+	*/
 
-	//move back to initial folder
-	// process.chdir(currPath);
+	console.log(queueCommandArray);
+	console.log(queueFileArray);
+	console.log(queueJsonArray);
 };
