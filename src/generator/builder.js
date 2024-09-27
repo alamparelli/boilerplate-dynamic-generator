@@ -61,36 +61,6 @@ const runCommandsSequentially = async (
 export const buildBoilerplate = (instructions, boilerWorkingFolder) => {
 	const workingDir = path.join(process.cwd(), boilerWorkingFolder);
 
-	for (let instruction of instructions) {
-		const keys = Object.keys(instruction);
-		keys.forEach((key) => {
-			const element = instruction[key];
-			console.log(element);
-			// 	switch (element.dest) {
-			// 		case 'json':
-			// 			queueJsonArray.push(element);
-			// 			break;
-			// 		case 'run':
-			// 			queueCommandArray.push(element.operations);
-			// 			break;
-			// 		case 'file':
-			// 			queueFileArray.push(element);
-			// 			break;
-			// 		default:
-			// 			break;
-			// 	}
-		});
-	}
-
-	/*
-	runCommandsSequentially(
-		queueCommandArray,
-		queueFileArray,
-		queueJsonArray,
-		workingDir
-	);
-	*/
-
 	console.log(queueCommandArray);
 	console.log(queueFileArray);
 	console.log(queueJsonArray);

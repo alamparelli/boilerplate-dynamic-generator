@@ -3,17 +3,28 @@
 	"html": "./src/templates/setup.html",
 	"position": 1,
 	"selectModule": {
-		"json": {
-			"path": "package.json",
-			"esmodule": {
-				"type": "module"
+		"type": "radio",
+		"esmodule": {
+			"json": {
+				"path": "package.json",
+				"esmodule": {
+					"type": "module"
+				}
 			},
-			"commonjs": {
-				"type": "commonjs"
-			}
+			"run": ["npm init -y"]
+		},
+		"commonjs": {
+			"json": {
+				"path": "package.json",
+				"commonjs": {
+					"type": "commonjs"
+				}
+			},
+			"run": ["npm init -y"]
 		}
 	},
 	"projectName": {
+		"type": "input",
 		"json": {
 			"path": "package.json",
 			"default": {
@@ -22,6 +33,7 @@
 		}
 	},
 	"projectAuthor": {
+		"type": "input",
 		"json": {
 			"path": "package.json",
 			"default": {
@@ -30,6 +42,7 @@
 		}
 	},
 	"authorEmail": {
+		"type": "input",
 		"json": {
 			"path": "package.json",
 			"default": {
@@ -38,9 +51,12 @@
 		}
 	},
 	"selectLanguage": {
-		"run": [
-			"echo 'nothing to do for typescript'",
-			"echo 'nothing to do for javascript'"
-		]
+		"type": "radio",
+		"typescript": {
+			"run": ["echo 'nothing to do'"]
+		},
+		"javascript": {
+			"run": ["echo 'nothing to do'"]
+		}
 	}
 }

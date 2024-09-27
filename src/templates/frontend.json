@@ -1,0 +1,19 @@
+{
+	"filename": "frontend",
+	"html": "./src/templates/frontend.html",
+	"position": 0,
+	"selectFrontend": {
+		"type": "radio",
+		"reactjs": {
+			"run": [
+				"npx create-react-app . && npm install eslint-plugin-react-hooks eslint-plugin-react @eslint/compat react react-router-dom"
+			]
+		},
+		"angular": {
+			"run": ["echo 'nothing to do for Angular'"]
+		},
+		"noFrontend": {
+			"run": ["npm init -y"]
+		}
+	}
+}

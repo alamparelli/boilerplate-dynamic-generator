@@ -1,24 +1,47 @@
-const extractParameters = (array, key, value) => {
-	// from boilerplat config Array
-	let instruction = {};
-	array.forEach((element) => {
-		if (element[key]) {
-			Object.entries(element[key]).forEach(([defKey, defValue]) => {
-				Object.entries(defkey).forEach(([k, v]) => {
-					console.log(k, v);
-					instruction = { defkey, defValue };
-				});
-			});
-		}
+export const parseActions = (object) => {
+	Object.entries(object).forEach(([key, value]) => {
+		Object.entries(value).forEach(([type, operation]) => {
+			if (type === 'json') {
+				//read path & inject object
+			}
+			if (type === 'run') {
+				//execute command
+			}
+			if (type === 'file') {
+				//execute command
+			}
+		});
 	});
-	return instruction;
 };
 
-export const parseKeys = (body, array) => {
+export const parseKeys = (body, object) => {
 	// from Form passed /submit-form
-	const instructions = [];
-	for (const [key, value] of Object.entries(body)) {
-		instructions.push(extractParameters(array, key, value));
-	}
-	return instructions;
+	const modifiedObject = {};
+	Object.entries(object).forEach(([key, value]) => {
+		Object.entries(body).forEach(([bodyKey, bodyValue]) => {
+			if (value[bodyKey] && value[bodyKey].type) {
+				if (value[bodyKey].type === 'radio') {
+					// console.log(bodyKey, value[bodyKey][bodyValue]);
+					modifiedObject[bodyKey] = value[bodyKey][bodyValue];
+				}
+				if (value[bodyKey].type === 'checkbox') {
+					// console.log(bodyKey, value[bodyKey][bodyValue]);
+					modifiedObject[bodyKey] = value[bodyKey][bodyValue];
+				}
+				if (value[bodyKey].type === 'input') {
+					if (value[bodyKey].json) {
+						const [[k, v]] = Object.entries(value[bodyKey].json.default);
+						value[bodyKey].json.default[k] = bodyValue;
+						modifiedObject[bodyKey] = value[bodyKey];
+					}
+					if (value[bodyKey].test) {
+						console.log('Not Yet Implemented');
+					}
+				}
+			}
+		});
+	});
+
+	console.log(modifiedObject);
+	return modifiedObject;
 };

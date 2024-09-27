@@ -2,7 +2,7 @@ import { readdirSync, readFileSync } from 'fs';
 import path from 'path';
 import express from 'express';
 import { writeJson } from './generator/generateJson.js';
-import { parseKeys } from './generator/generator.js';
+import { parseActions, parseKeys } from './generator/generator.js';
 import { buildBoilerplate } from './generator/builder.js';
 
 const app = express();
@@ -19,45 +19,45 @@ const readBoilerplateConfig = () => {
 
 const readTemplatesConfig = () => {
 	const templatePath = readBoilerplateConfig().base.template;
-	const templatesArray = [];
+	const templateObject = {};
 	try {
 		const files = readdirSync(templatePath);
 		files.forEach((file) => {
 			if (path.extname(file) === '.json') {
-				templatesArray.push(
-					JSON.parse(readFileSync(path.join(templatePath, file), 'utf8'))
+				const tempObj = JSON.parse(
+					readFileSync(path.join(templatePath, file), 'utf8')
 				);
+				templateObject[tempObj.position] = tempObj;
 			}
 		});
 	} catch (err) {
 		console.error('Error reading directory:', err);
 	}
-	return templatesArray;
+	return templateObject;
 };
 
 const buildUI = async () => {
 	const fullPage = readFileSync('./src/public/index.html', 'utf-8');
-	const templatesArray = readTemplatesConfig();
-
-	templatesArray.sort((a, b) => a.position - b.position);
+	const templateObject = readTemplatesConfig();
 
 	let sections = '';
 	let content = '';
 	let tempMENU = '';
 	let tempFullPage = '';
 
-	templatesArray.forEach((element) => {
+	Object.entries(templateObject).forEach(([key, value]) => {
 		sections =
 			sections +
-			`<div><a href="#${element.filename}" class="text-primary fs-5 my-2">${
-				element.filename.charAt(0).toUpperCase() +
-				element.filename.slice(1).toLowerCase()
+			`<div><a href="#${value.filename}" class="text-primary fs-5 my-2">${
+				value.filename.charAt(0).toUpperCase() +
+				value.filename.slice(1).toLowerCase()
 			}</a></div>`;
 	});
 
-	templatesArray.forEach((element) => {
-		content = content + readFileSync(element.html, 'utf-8');
+	Object.entries(templateObject).forEach(([key, value]) => {
+		content = content + readFileSync(value.html, 'utf-8');
 	});
+
 	tempMENU = fullPage.replace('<MENUGENERATOR>', sections);
 	tempFullPage = tempMENU.replace('<BODYGENERATOR>', content);
 	return tempFullPage;
@@ -69,8 +69,9 @@ app.use(express.urlencoded({ extended: true }));
 
 app.post('/submit-form', (req, res) => {
 	const instructions = parseKeys(req.body, readTemplatesConfig());
+	parseActions(instructions);
 	const boilerWorkingFolder = readBoilerplateConfig().base.boilerWorkingFolder;
-	//buildBoilerplate(instructions, boilerWorkingFolder);
+	// buildBoilerplate(instructions, boilerWorkingFolder);
 	res.status(200).json(instructions);
 });
 

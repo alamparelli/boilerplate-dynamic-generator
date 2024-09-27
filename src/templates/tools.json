@@ -3,15 +3,13 @@
 	"html": "./src/templates/tools.html",
 	"position": 3,
 	"addNodemon": {
-		"run": ["npm init -y", "npm install nodemon"],
-		"file": [
-			{
+		"addNodemon": {
+			"run": ["npm install nodemon"],
+			"file": {
 				"fileSource": "./src/templates/nodemon/nodemon.json",
 				"fileDest": "nodemon.json"
-			}
-		],
-		"json": [
-			{
+			},
+			"json": {
 				"path": "package.json",
 				"content": {
 					"scripts": {
@@ -20,6 +18,7 @@
 					}
 				}
 			}
-		]
+		},
+		"type": "checkbox"
 	}
 }
