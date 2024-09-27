@@ -48,7 +48,7 @@ const runCommandsSequentially = async (
 		let filePath = path.join(workingDir, jsonConfig.path);
 		try {
 			let file = await JSON.parse(readFileSync(filePath, 'utf8'));
-			Object.entries(jsonConfig.operations).forEach(([key, value]) => {
+			Object.entries(jsonConfig.default).forEach(([key, value]) => {
 				file[key] = value;
 			});
 			fs.writeFileSync(filePath, JSON.stringify(file, null, 2), 'utf-8');
@@ -58,10 +58,39 @@ const runCommandsSequentially = async (
 	}
 };
 
-export const buildBoilerplate = (instructions, boilerWorkingFolder) => {
+export const buildBoilerplate = (object, boilerWorkingFolder) => {
 	const workingDir = path.join(process.cwd(), boilerWorkingFolder);
 
-	console.log(queueCommandArray);
-	console.log(queueFileArray);
-	console.log(queueJsonArray);
+	Object.entries(object).forEach(([key, value]) => {
+		Object.entries(value).forEach(async ([type, operation]) => {
+			if (type === 'run') {
+				for (let command of operation) {
+					try {
+						const { stdout, stderr } = await execPromise(command, {
+							cwd: workingDir,
+						});
+						console.log(stdout);
+						if (stderr) {
+							console.error(stderr);
+						}
+					} catch (error) {
+						console.error(error);
+					}
+				}
+			}
+			if (type === 'file') {
+				try {
+					await copyFilePromise(
+						value.file.fileSource,
+						path.join(workingDir, value.file.fileDest)
+					);
+				} catch (error) {
+					console.error(error);
+				}
+			}
+			if (type === 'json') {
+				//read path & inject object
+			}
+		});
+	});
 };

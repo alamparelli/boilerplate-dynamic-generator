@@ -1,19 +1,3 @@
-export const parseActions = (object) => {
-	Object.entries(object).forEach(([key, value]) => {
-		Object.entries(value).forEach(([type, operation]) => {
-			if (type === 'json') {
-				//read path & inject object
-			}
-			if (type === 'run') {
-				//execute command
-			}
-			if (type === 'file') {
-				//execute command
-			}
-		});
-	});
-};
-
 export const parseKeys = (body, object) => {
 	// from Form passed /submit-form
 	const modifiedObject = {};
@@ -42,6 +26,5 @@ export const parseKeys = (body, object) => {
 		});
 	});
 
-	console.log(modifiedObject);
 	return modifiedObject;
 };

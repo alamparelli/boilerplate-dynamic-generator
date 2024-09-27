@@ -10,8 +10,7 @@
 				"esmodule": {
 					"type": "module"
 				}
-			},
-			"run": ["npm init -y"]
+			}
 		},
 		"commonjs": {
 			"json": {
@@ -19,8 +18,7 @@
 				"commonjs": {
 					"type": "commonjs"
 				}
-			},
-			"run": ["npm init -y"]
+			}
 		}
 	},
 	"projectName": {
