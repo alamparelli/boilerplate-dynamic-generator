@@ -1,7 +1,6 @@
 import { readdirSync, readFileSync } from 'fs';
 import path from 'path';
 import express from 'express';
-import { writeJson } from './generator/generateJson.js';
 import { parseKeys } from './generator/generator.js';
 import { buildBoilerplate } from './generator/builder.js';
 

@@ -58,39 +58,76 @@ const runCommandsSequentially = async (
 	}
 };
 
-export const buildBoilerplate = (object, boilerWorkingFolder) => {
+export const buildBoilerplate = async (object, boilerWorkingFolder) => {
 	const workingDir = path.join(process.cwd(), boilerWorkingFolder);
+	if (!fs.existsSync(workingDir)) {
+		fs.mkdirSync(workingDir);
+	}
+
+	const runCommandArray = [];
+	let npmCommand = 'npm install ';
+	const runCopyFiles = [];
+	const runJson = [];
 
 	Object.entries(object).forEach(([key, value]) => {
 		Object.entries(value).forEach(async ([type, operation]) => {
 			if (type === 'run') {
+				console.log(operation);
 				for (let command of operation) {
-					try {
-						const { stdout, stderr } = await execPromise(command, {
-							cwd: workingDir,
-						});
-						console.log(stdout);
-						if (stderr) {
-							console.error(stderr);
-						}
-					} catch (error) {
-						console.error(error);
-					}
+					runCommandArray.push(command);
+				}
+			}
+			if (type === 'npm') {
+				for (let command of operation) {
+					npmCommand = npmCommand + ' ' + command;
 				}
 			}
 			if (type === 'file') {
-				try {
-					await copyFilePromise(
-						value.file.fileSource,
-						path.join(workingDir, value.file.fileDest)
-					);
-				} catch (error) {
-					console.error(error);
-				}
+				runCopyFiles.push(operation);
 			}
 			if (type === 'json') {
-				//read path & inject object
+				runJson.push(operation);
 			}
 		});
 	});
+
+	runCommandArray.push(npmCommand);
+
+	for (let command of runCommandArray) {
+		try {
+			const { stdout, stderr } = await execPromise(command, {
+				cwd: workingDir,
+			});
+			console.log(stdout);
+			if (stderr) {
+				console.error(stderr);
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
+	for (let instruct of runCopyFiles) {
+		try {
+			await copyFilePromise(
+				instruct.fileSource,
+				path.join(workingDir, instruct.fileDest)
+			);
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
+	for (const jsonConfig of runJson) {
+		let filePath = path.join(workingDir, jsonConfig.path);
+		try {
+			let file = await JSON.parse(readFileSync(filePath, 'utf8'));
+			Object.entries(jsonConfig.default).forEach(([key, value]) => {
+				file[key] = value;
+			});
+			fs.writeFileSync(filePath, JSON.stringify(file, null, 2), 'utf-8');
+		} catch (error) {
+			console.log(error);
+		}
+	}
 };

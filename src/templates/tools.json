@@ -4,7 +4,7 @@
 	"position": 3,
 	"addNodemon": {
 		"addNodemon": {
-			"run": ["npm install nodemon"],
+			"npm": ["nodemon"],
 			"file": {
 				"fileSource": "./src/templates/nodemon/nodemon.json",
 				"fileDest": "nodemon.json"
