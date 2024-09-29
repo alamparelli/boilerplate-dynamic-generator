@@ -39,26 +39,27 @@ const buildUI = async () => {
 	const fullPage = readFileSync('./src/public/index.html', 'utf-8');
 	const templateObject = readTemplatesConfig();
 
-	let sections = '';
+	// let sections = '';
 	let content = '';
 	let tempMENU = '';
 	let tempFullPage = '';
 
-	Object.entries(templateObject).forEach(([key, value]) => {
-		sections =
-			sections +
-			`<div><a href="#${value.filename}" class="text-primary fs-5 my-2">${
-				value.filename.charAt(0).toUpperCase() +
-				value.filename.slice(1).toLowerCase()
-			}</a></div>`;
-	});
+	// Object.entries(templateObject).forEach(([key, value]) => {
+	// 	sections =
+	// 		sections +
+	// 		`<div><a href="#${value.filename}" class="text-primary fs-5 my-2">${
+	// 			value.filename.charAt(0).toUpperCase() +
+	// 			value.filename.slice(1).toLowerCase()
+	// 		}</a></div>`;
+	// });
 
 	Object.entries(templateObject).forEach(([key, value]) => {
 		content = content + readFileSync(value.html, 'utf-8');
 	});
 
-	tempMENU = fullPage.replace('<MENUGENERATOR>', sections);
-	tempFullPage = tempMENU.replace('<BODYGENERATOR>', content);
+	// tempMENU = fullPage.replace('<MENUGENERATOR>', sections);
+	// tempFullPage = tempMENU.replace('<BODYGENERATOR>', content);
+	tempFullPage = fullPage.replace('<BODYGENERATOR>', content);
 	return tempFullPage;
 };
 
@@ -66,11 +67,11 @@ const appUI = await buildUI();
 
 app.use(express.urlencoded({ extended: true }));
 
-app.post('/submit-form', (req, res) => {
+app.post('/submit-form', async (req, res) => {
 	const instructions = parseKeys(req.body, readTemplatesConfig());
 	const boilerWorkingFolder = readBoilerplateConfig().base.boilerWorkingFolder;
-	buildBoilerplate(instructions, boilerWorkingFolder);
-	res.status(200).json(instructions);
+	const result = await buildBoilerplate(instructions, boilerWorkingFolder);
+	res.status(200).json({ Operations: result, Instructions: instructions });
 });
 
 app.use('/', async (req, res) => {

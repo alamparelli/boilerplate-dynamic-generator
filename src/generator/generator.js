@@ -5,17 +5,17 @@ export const parseKeys = (body, object) => {
 		Object.entries(body).forEach(([bodyKey, bodyValue]) => {
 			if (value[bodyKey] && value[bodyKey].type) {
 				if (value[bodyKey].type === 'radio') {
-					// console.log(bodyKey, value[bodyKey][bodyValue]);
 					modifiedObject[bodyKey] = value[bodyKey][bodyValue];
 				}
 				if (value[bodyKey].type === 'checkbox') {
-					// console.log(bodyKey, value[bodyKey][bodyValue]);
 					modifiedObject[bodyKey] = value[bodyKey][bodyValue];
 				}
 				if (value[bodyKey].type === 'input') {
 					if (value[bodyKey].json) {
-						const [[k, v]] = Object.entries(value[bodyKey].json.default);
-						value[bodyKey].json.default[k] = bodyValue;
+						if (value[bodyKey].json.default) {
+							const [[k, v]] = Object.entries(value[bodyKey].json.default);
+							value[bodyKey].json.default[k] = bodyValue;
+						}
 						modifiedObject[bodyKey] = value[bodyKey];
 					}
 					if (value[bodyKey].test) {

@@ -7,7 +7,7 @@
 		"esmodule": {
 			"json": {
 				"path": "package.json",
-				"esmodule": {
+				"default": {
 					"type": "module"
 				}
 			}
@@ -15,7 +15,7 @@
 		"commonjs": {
 			"json": {
 				"path": "package.json",
-				"commonjs": {
+				"default": {
 					"type": "commonjs"
 				}
 			}

@@ -11,7 +11,7 @@
 			},
 			"json": {
 				"path": "package.json",
-				"content": {
+				"default": {
 					"scripts": {
 						"dev": "nodemon index.js",
 						"start": "node index.js"

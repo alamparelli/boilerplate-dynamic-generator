@@ -20,26 +20,18 @@
 			}
 		  </style>
 	</head>
-	<body>
+	<body class="bg-light ">
 		<div class="container mt-5">
-			<h1 id="top" class="text-center">Boilerplate Generator</h1>
+			<h1 id="top" class="text-center">JavaScript Boilerplate Generator</h1>
 			<section class="mt-5"></section>
             <hr class="my-5">
 			<div class="container">
-				<div class="row">
-				  <div class="col-md-3">
-					<h2>Sections</h2>
-					<MENUGENERATOR>
-				  </div>
-				  <div class="col-md-7">
-					<form action="/submit-form" method="post" onsubmit="return confirmSubmission()">
-						<BODYGENERATOR>
-						<input type="submit" value="Create Boilerplate" />
-					</form>
-				  </div>
-				</div>
-			  </div>
-			  <button id="backToTop" class="btn btn-primary">Back to Top</button>
+				<form action="/submit-form" method="post" onsubmit="return confirmSubmission()">
+					<BODYGENERATOR>
+					<input type="submit" value="Generate Boilerplate" />
+				</form>
+			</div>
+			<button id="backToTop" class="btn btn-primary">Back to Top</button>
 		</div>
 
 		<!-- Bootstrap JavaScript and Popper.js -->

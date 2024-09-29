@@ -2,61 +2,10 @@ import fs, { copyFile, readFileSync } from 'fs';
 import path from 'path';
 import { exec } from 'child_process';
 import { promisify } from 'util';
+import { error } from 'console';
 
 const execPromise = promisify(exec);
 const copyFilePromise = promisify(copyFile);
-
-const queueCommandArray = [];
-const queueFileArray = [];
-const queueJsonArray = [];
-
-const runCommandsSequentially = async (
-	commands,
-	queueFileArray,
-	queueJsonArray,
-	workingDir
-) => {
-	// Command Configs
-	for (const command of commands) {
-		try {
-			const { stdout, stderr } = await execPromise(command, {
-				cwd: workingDir,
-			});
-			console.log(stdout);
-			if (stderr) {
-				console.error(stderr);
-			}
-		} catch (error) {
-			console.error(error);
-		}
-	}
-
-	//File Copy
-	for (const file of queueFileArray) {
-		try {
-			await copyFilePromise(
-				file.fileSource,
-				path.join(workingDir, file.fileDest)
-			);
-		} catch (error) {
-			console.error(error);
-		}
-	}
-
-	// JSON configs
-	for (const jsonConfig of queueJsonArray) {
-		let filePath = path.join(workingDir, jsonConfig.path);
-		try {
-			let file = await JSON.parse(readFileSync(filePath, 'utf8'));
-			Object.entries(jsonConfig.default).forEach(([key, value]) => {
-				file[key] = value;
-			});
-			fs.writeFileSync(filePath, JSON.stringify(file, null, 2), 'utf-8');
-		} catch (error) {
-			console.log(error);
-		}
-	}
-};
 
 export const buildBoilerplate = async (object, boilerWorkingFolder) => {
 	const workingDir = path.join(process.cwd(), boilerWorkingFolder);
@@ -68,11 +17,16 @@ export const buildBoilerplate = async (object, boilerWorkingFolder) => {
 	let npmCommand = 'npm install ';
 	const runCopyFiles = [];
 	const runJson = [];
+	let logOutput = [];
+
+	const consoleLog = (input) => {
+		logOutput.push(input);
+		console.log(input);
+	};
 
 	Object.entries(object).forEach(([key, value]) => {
 		Object.entries(value).forEach(async ([type, operation]) => {
 			if (type === 'run') {
-				console.log(operation);
 				for (let command of operation) {
 					runCommandArray.push(command);
 				}
@@ -98,7 +52,7 @@ export const buildBoilerplate = async (object, boilerWorkingFolder) => {
 			const { stdout, stderr } = await execPromise(command, {
 				cwd: workingDir,
 			});
-			console.log(stdout);
+			consoleLog(`Execute : ${command}`);
 			if (stderr) {
 				console.error(stderr);
 			}
@@ -113,6 +67,7 @@ export const buildBoilerplate = async (object, boilerWorkingFolder) => {
 				instruct.fileSource,
 				path.join(workingDir, instruct.fileDest)
 			);
+			consoleLog(`Copy : ${instruct.fileDest}`);
 		} catch (error) {
 			console.error(error);
 		}
@@ -122,12 +77,20 @@ export const buildBoilerplate = async (object, boilerWorkingFolder) => {
 		let filePath = path.join(workingDir, jsonConfig.path);
 		try {
 			let file = await JSON.parse(readFileSync(filePath, 'utf8'));
+			// Object.entries(jsonConfig.object).forEach(([key, value]) => {
 			Object.entries(jsonConfig.default).forEach(([key, value]) => {
 				file[key] = value;
+				consoleLog(
+					`Modify ${jsonConfig.path} with content : ${JSON.stringify(
+						jsonConfig.default
+					)}`
+				);
 			});
 			fs.writeFileSync(filePath, JSON.stringify(file, null, 2), 'utf-8');
 		} catch (error) {
 			console.log(error);
 		}
 	}
+
+	return { Status: 'Done', Logs: logOutput };
 };

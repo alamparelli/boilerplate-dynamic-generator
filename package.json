@@ -23,7 +23,7 @@
 	},
 	"license": "GPL-3.0-only",
 	"scripts": {
-		"dev": "nodemon --verbose ./src/app.js",
+		"dev": "nodemon ./src/app.js",
 		"start": "node ./src/app.js"
 	},
 	"type": "module"
