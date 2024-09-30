@@ -16,8 +16,6 @@
 		"prettier": "github:helixbass/prettier#prettier-v2.1.0-dev.100-gitpkg"
 	},
 	"dependencies": {
-		"bootstrap": "^5.3.3",
-		"gulpfile": "^1.0.2",
 		"express": "^4.21.0",
 		"nodemon": "^3.1.7"
 	},
