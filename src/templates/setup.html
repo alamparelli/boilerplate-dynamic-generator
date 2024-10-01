@@ -1,12 +1,12 @@
 <div class="row">
-	<div>
+	<div class="container">
 		<h2 id="setup">Setup Project</h2>
-		<div>
-			<h3>Project Infos</h3>
+		<div class="m-3">
+			<p class="fw-bold">Project Infos</p>
 			<div>
-				<label for="name">Project Name</label>
+				<label class="form-label" for="projectName">Project Name</label>
 				<input
-					class="option"
+					class="form-control option"
 					type="text"
 					id="projectName"
 					name="projectName"
@@ -15,9 +15,9 @@
 				/>
 			</div>
 			<div>
-				<label for="name">Author Name</label>
+				<label class="form-label" for="projectAuthor">Author Name</label>
 				<input
-					class="option"
+					class="form-control option"
 					type="text"
 					id="projectAuthor"
 					name="projectAuthor"
@@ -26,9 +26,9 @@
 				/>
 			</div>
 			<div>
-				<label for="name">Author Email</label>
+				<label class="form-label" for="authorEmail">Author Email</label>
 				<input
-					class="option"
+					class="form-control option"
 					type="email"
 					id="authorEmail"
 					name="authorEmail"
@@ -37,50 +37,55 @@
 				/>
 			</div>
 		</div>
-		<h3>Module</h3>
-		<div class="form-check">
-			<input
-				class="form-check-input option"
-				type="radio"
-				name="selectModule"
-				id="esmodule"
-				value="esmodule"
-				checked
-			/>
-			<label class="form-check-label" for="esmodule">ES Modules </label>
+		<div class="m-3">
+			<p class="fw-bold">Select Modules</p>
+			<p>This will change the type option in package-json</p>
+			<div class="form-check form-check-inline">
+				<input
+					class="form-check-input option"
+					type="radio"
+					name="selectModule"
+					id="esmodule"
+					value="esmodule"
+					checked
+				/>
+				<label class="form-check-label" for="esmodule">ES Modules </label>
+			</div>
+			<div class="form-check form-check-inline">
+				<input
+					class="form-check-input option"
+					type="radio"
+					name="selectModule"
+					id="commonjs"
+					value="commonjs"
+				/>
+				<label class="form-check-label" for="commonjs">CommonJS</label>
+			</div>
 		</div>
-		<div class="form-check">
-			<input
-				class="form-check-input option"
-				type="radio"
-				name="selectModule"
-				id="commonjs"
-				value="commonjs"
-			/>
-			<label class="form-check-label" for="commonjs">CommonJS Modules</label>
+		<div class="m-3">
+			<p class="fw-bold">Language</p>
+			<div class="form-check form-check-inline">
+				<input
+					class="form-check-input option"
+					type="radio"
+					name="selectLanguage"
+					id="typescript"
+					value="typescript"
+				/>
+				<label class="form-check-label" for="typescript">Typescript</label>
+			</div>
+			<div class="form-check form-check-inline">
+				<input
+					class="form-check-input option"
+					type="radio"
+					name="selectLanguage"
+					id="javascript"
+					value="javascript"
+					checked
+				/>
+				<label class="form-check-label" for="javascript"> JavaScript </label>
+			</div>
 		</div>
-		<h3>Language</h3>
-		<div class="form-check">
-			<input
-				class="form-check-input option"
-				type="radio"
-				name="selectLanguage"
-				id="typescript"
-				value="typescript"
-			/>
-			<label class="form-check-label" for="typescript">Typescript</label>
-		</div>
-		<div class="form-check">
-			<input
-				class="form-check-input option"
-				type="radio"
-				name="selectLanguage"
-				id="javascript"
-				value="javascript"
-				checked
-			/>
-			<label class="form-check-label" for="javascript"> JavaScript </label>
-		</div>
+		<hr class="my-5" />
 	</div>
-	<hr class="my-5" />
 </div>
