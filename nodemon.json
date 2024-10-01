@@ -1,0 +1,3 @@
+{
+	"ignore": ["boilerworkingfolder/*", "package*.json"]
+}

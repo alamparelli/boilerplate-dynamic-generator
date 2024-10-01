@@ -1,0 +1,24 @@
+{
+	"filename": "tools",
+	"html": "./src/templates/tools.html",
+	"position": 3,
+	"addNodemon": {
+		"addNodemon": {
+			"npm": ["nodemon"],
+			"file": {
+				"fileSource": "./src/templates/nodemon/nodemon.json",
+				"fileDest": "nodemon.json"
+			},
+			"json": {
+				"path": "package.json",
+				"default": {
+					"scripts": {
+						"dev": "nodemon index.js",
+						"start": "node index.js"
+					}
+				}
+			}
+		},
+		"type": "checkbox"
+	}
+}

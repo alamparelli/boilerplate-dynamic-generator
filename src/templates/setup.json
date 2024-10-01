@@ -1,0 +1,60 @@
+{
+	"filename": "setup",
+	"html": "./src/templates/setup.html",
+	"position": 1,
+	"selectModule": {
+		"type": "radio",
+		"esmodule": {
+			"json": {
+				"path": "package.json",
+				"default": {
+					"type": "module"
+				}
+			}
+		},
+		"commonjs": {
+			"json": {
+				"path": "package.json",
+				"default": {
+					"type": "commonjs"
+				}
+			}
+		}
+	},
+	"projectName": {
+		"type": "input",
+		"json": {
+			"path": "package.json",
+			"default": {
+				"name": "boilerplate"
+			}
+		}
+	},
+	"projectAuthor": {
+		"type": "input",
+		"json": {
+			"path": "package.json",
+			"default": {
+				"author": "Jhon"
+			}
+		}
+	},
+	"authorEmail": {
+		"type": "input",
+		"json": {
+			"path": "package.json",
+			"default": {
+				"email": "jhon@doe.com"
+			}
+		}
+	},
+	"selectLanguage": {
+		"type": "radio",
+		"typescript": {
+			"run": ["echo 'nothing to do'"]
+		},
+		"javascript": {
+			"run": ["echo 'nothing to do'"]
+		}
+	}
+}

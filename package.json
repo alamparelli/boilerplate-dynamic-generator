@@ -1,0 +1,28 @@
+{
+	"app": {
+		"name": "boilerplate-dynamic-generator",
+		"version": "0.0.1"
+	},
+	"owner": {
+		"name": "AlessandroLAMPARELLI",
+		"email": "alessandro@lamparelli.eu"
+	},
+	"homepage": "https://github.com/alamparelli/boilerplate-dynamic-generator#readme",
+	"bugs": {
+		"url": "https://github.com/alamparelli/boilerplate-dynamic-generator/issues"
+	},
+	"devDependencies": {
+		"eslint": "^7.32.0",
+		"prettier": "github:helixbass/prettier#prettier-v2.1.0-dev.100-gitpkg"
+	},
+	"dependencies": {
+		"express": "^4.21.0",
+		"nodemon": "^3.1.7"
+	},
+	"license": "GPL-3.0-only",
+	"scripts": {
+		"dev": "nodemon ./src/app.js",
+		"start": "node ./src/app.js"
+	},
+	"type": "module"
+}

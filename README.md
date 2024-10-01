@@ -16,45 +16,52 @@
 ## Features
 
 1. **Technology Selection**:
+
    - **CSS**: Bootstrap
-   - **Languages**: CoffeeScript to generate the code / Javascript files
+   - **Languages**: Javascripts
    - **Backend**: Node.js
 
 2. **File and Configuration Management**:
+
    - Use **local JSON files** to manage configurations.
    - Each boilerplate is generated in a **temporary directory**
    - Ability to **choose libraries** to include in the boilerplate and modify the associated metadata.
 
 3. **Configuration Saving**:
+
    - Configurations can be saved in **local JSON files** to avoid re-entering them with each new generation. (MVP1)
    - Configurations can be saved in **local storage** to avoid re-entering them with each new generation. (MVP2)
 
-5. **Suggestions and Modifications**:
+4. **Suggestions and Modifications**:
+
    - Users can submit proposals or suggestions through a **GitHub Issue**. A link to the GitHub project is provided to simplify this interaction.
 
-6. **MVP2**:
+5. **MVP2**:
    - Create a simple page providing a clean and minimalist user experience.
 
 ## Stack Used
 
 - **Node.js** for the backend
-- **CoffeeScript** for code writing
+- **Javascript** for code writing
 - **JSON** for local configuration storage
 - **Bootstrap** for front-end design
 
 ## Deployment Guide
 
 1. **Clone the Project**:
+
    ```bash
    git clone https://github.com/your-username/boilerplate-dynamic-generator.git
    ```
 
 2. **Install Dependencies**:
+
    ```bash
    npm install
    ```
 
 3. **Usage**:
+
    - Run the code via **node boilerplate.js** and select the technologies and libraries to include in the boilerplate.
    - Generate the boilerplate in a temporary directory.
    - Save the configuration in local storage if needed.

@@ -1,0 +1,6 @@
+{
+	"base": {
+		"template": "./src/templates",
+		"boilerWorkingFolder": "boilerworkingfolder"
+	}
+}

@@ -1,0 +1,11 @@
+{
+	"filename": "backend",
+	"html": "./src/templates/backend.html",
+	"position": 2,
+	"addExpress": {
+		"addExpress": {
+			"npm": ["express cors helmet express-validator"]
+		},
+		"type": "checkbox"
+	}
+}

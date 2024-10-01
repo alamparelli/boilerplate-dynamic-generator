@@ -1,0 +1,91 @@
+<div class="row">
+	<div class="container">
+		<h2 id="setup">Setup Project</h2>
+		<div class="m-3">
+			<p class="fw-bold">Project Infos</p>
+			<div>
+				<label class="form-label" for="projectName">Project Name</label>
+				<input
+					class="form-control option"
+					type="text"
+					id="projectName"
+					name="projectName"
+					size="15"
+					value="my-app"
+				/>
+			</div>
+			<div>
+				<label class="form-label" for="projectAuthor">Author Name</label>
+				<input
+					class="form-control option"
+					type="text"
+					id="projectAuthor"
+					name="projectAuthor"
+					size="15"
+					value="Me"
+				/>
+			</div>
+			<div>
+				<label class="form-label" for="authorEmail">Author Email</label>
+				<input
+					class="form-control option"
+					type="email"
+					id="authorEmail"
+					name="authorEmail"
+					size="15"
+					value="info@mail.com"
+				/>
+			</div>
+		</div>
+		<div class="m-3">
+			<p class="fw-bold">Select Modules</p>
+			<p>This will change the type option in package-json</p>
+			<div class="form-check form-check-inline">
+				<input
+					class="form-check-input option"
+					type="radio"
+					name="selectModule"
+					id="esmodule"
+					value="esmodule"
+					checked
+				/>
+				<label class="form-check-label" for="esmodule">ES Modules </label>
+			</div>
+			<div class="form-check form-check-inline">
+				<input
+					class="form-check-input option"
+					type="radio"
+					name="selectModule"
+					id="commonjs"
+					value="commonjs"
+				/>
+				<label class="form-check-label" for="commonjs">CommonJS</label>
+			</div>
+		</div>
+		<div class="m-3">
+			<p class="fw-bold">Language</p>
+			<div class="form-check form-check-inline">
+				<input
+					class="form-check-input option"
+					type="radio"
+					name="selectLanguage"
+					id="typescript"
+					value="typescript"
+				/>
+				<label class="form-check-label" for="typescript">Typescript</label>
+			</div>
+			<div class="form-check form-check-inline">
+				<input
+					class="form-check-input option"
+					type="radio"
+					name="selectLanguage"
+					id="javascript"
+					value="javascript"
+					checked
+				/>
+				<label class="form-check-label" for="javascript"> JavaScript </label>
+			</div>
+		</div>
+		<hr class="my-5" />
+	</div>
+</div>
