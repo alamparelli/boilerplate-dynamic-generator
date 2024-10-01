@@ -1,3 +1,4 @@
 {
-	"ignore": ["boilerworkingfolder/*", "package*.json"]
+	"ignore": ["boilerworkingfolder/*", "package*.json"],
+	"ext": "js,html,json"
 }
