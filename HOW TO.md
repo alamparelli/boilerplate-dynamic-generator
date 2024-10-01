@@ -35,7 +35,7 @@ To use the Boilerplate Dynamic Generator:
 1. Start the application:
 
    ```bash
-   node src/app.js
+   npm run dev
    ```
 
 2. Open your web browser and navigate to `http://localhost:3000`.
@@ -143,7 +143,7 @@ If you encounter any issues:
 
 - Check the console output for error messages.
 - Ensure all dependencies are correctly installed.
-- Verify that the paths in `boilerplateConfig.json` are correct.
+- Verify that the paths in `boilerplateConfig.json` are correct (changing directory is not implemeneted).
 - Check that you have the necessary permissions to write to the `boilerWorkingFolder` directory.
 
 ## 6. Contributing
