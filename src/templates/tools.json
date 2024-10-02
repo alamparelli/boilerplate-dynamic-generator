@@ -20,5 +20,17 @@
 			}
 		},
 		"type": "checkbox"
+	},
+	"addJQuery": {
+		"cdnJQuery": {
+			"run": ["echo 'Not implemented yet"]
+		},
+		"localJQuery": {
+			"npm": ["jquery"],
+			"run": [
+				"{ echo 'import $ from \"jquery\"'; cat ./index.js; } > ./tempfile && mv ./tempfile ./index.js"
+			]
+		},
+		"type": "checkbox"
 	}
 }

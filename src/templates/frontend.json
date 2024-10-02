@@ -16,11 +16,8 @@
 				"eslint-plugin-react-hooks eslint-plugin-react @eslint/compat react react-router-dom"
 			]
 		},
-		"angular": {
-			"run": ["echo 'nothing to do for Angular'"]
-		},
 		"noFrontend": {
-			"run": ["npm init -y"]
+			"run": ["npm init -y", "touch ./index.js"]
 		}
 	}
 }
