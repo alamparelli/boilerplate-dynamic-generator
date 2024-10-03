@@ -2,6 +2,29 @@
 	"filename": "tools",
 	"html": "./src/templates/tools.html",
 	"position": 3,
+	"addReactRouter": {
+		"addReactRouter": {
+			"npm": ["react-router-dom"],
+			"run": ["mkdir ./src/pages"],
+			"file1": {
+				"fileSource": "./src/templates/reactRouter/Home.js",
+				"fileDest": "./src/pages/Home.js"
+			},
+			"file2": {
+				"fileSource": "./src/templates/reactRouter/About.js",
+				"fileDest": "./src/pages/About.js"
+			},
+			"file3": {
+				"fileSource": "./src/templates/reactRouter/Contact.js",
+				"fileDest": "./src/pages/Contact.js"
+			},
+			"file4": {
+				"fileSource": "./src/templates/reactRouter/NotFound.js",
+				"fileDest": "./src/pages/NotFound.js"
+			}
+		},
+		"type": "checkbox"
+	},
 	"addNodemon": {
 		"addNodemon": {
 			"npm": ["nodemon"],

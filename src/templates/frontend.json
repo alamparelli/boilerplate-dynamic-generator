@@ -6,15 +6,11 @@
 		"type": "radio",
 		"reactjs": {
 			"run": ["npx create-react-app ."],
-			"npm": [
-				"eslint-plugin-react-hooks eslint-plugin-react @eslint/compat react react-router-dom"
-			]
+			"npm": ["eslint-plugin-react-hooks eslint-plugin-react @eslint/compat"]
 		},
 		"reactts": {
 			"run": ["npx create-react-app . --template typescript"],
-			"npm": [
-				"eslint-plugin-react-hooks eslint-plugin-react @eslint/compat react react-router-dom"
-			]
+			"npm": ["eslint-plugin-react-hooks eslint-plugin-react @eslint/compat"]
 		},
 		"noFrontend": {
 			"run": ["npm init -y", "touch ./index.js"]
