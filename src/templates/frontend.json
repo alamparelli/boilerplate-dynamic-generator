@@ -39,7 +39,10 @@
 			}
 		},
 		"bootstrap": {
-			"run": ["echo nothing to do"]
+			"npm": ["bootstrap"],
+			"run": [
+				"{ echo 'import \"bootstrap/dist/css/bootstrap.min.css\"'; cat ./src/index.js; } > ./src/tempfile && mv ./src/tempfile ./src/index.js"
+			]
 		}
 	}
 }
