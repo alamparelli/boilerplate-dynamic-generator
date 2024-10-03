@@ -4,7 +4,16 @@
 	"position": 2,
 	"addExpress": {
 		"addExpress": {
-			"npm": ["express cors helmet express-validator"]
+			"npm": ["express cors helmet express-validator"],
+			"run": ["mkdir ./routes"],
+			"file": {
+				"fileSource": "./src/templates/express/index.js",
+				"fileDest": "./index.js"
+			},
+			"file1": {
+				"fileSource": "./src/templates/express/userRoutes.js",
+				"fileDest": "./routes/userRoutes.js"
+			}
 		},
 		"type": "checkbox"
 	}

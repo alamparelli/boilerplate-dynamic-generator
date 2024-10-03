@@ -23,7 +23,7 @@
 						id="noFrontend"
 						value="noFrontend"
 					/>
-					<label class="form-check-label" for="noFrontend"> No FrontEnd </label>
+					<label class="form-check-label" for="noFrontend">No FrontEnd </label>
 				</div>
 			</div>
 			<div class="m-3">
@@ -37,7 +37,7 @@
 						value="tailwind"
 						checked
 					/>
-					<label class="form-check-label" for="tailwind"> Tailwind CSS </label>
+					<label class="form-check-label" for="tailwind">Tailwind CSS </label>
 				</div>
 				<div class="form-check form-check-inline">
 					<input
@@ -47,9 +47,48 @@
 						id="bootstrap"
 						value="bootstrap"
 					/>
-					<label class="form-check-label" for="bootstrap"> Bootstrap </label>
+					<label class="form-check-label" for="bootstrap">Bootstrap </label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input
+						class="form-check-input option"
+						type="radio"
+						name="selectCSS"
+						id="nocss"
+						value="nocss"
+					/>
+					<label class="form-check-label" for="nocss"> No CSS </label>
 				</div>
 			</div>
+			<script>
+				// Fonction pour gérer les changements de Group 1
+				document
+					.querySelectorAll('input[name="selectFrontend"]')
+					.forEach(function (radio) {
+						radio.addEventListener('change', function () {
+							if (this.checked) {
+								let correspondingValue;
+
+								// Logique conditionnelle basée sur la valeur de group1
+								if (this.value === 'reactjs') {
+									correspondingValue = 'tailwind'; // Si ReactJS est sélectionné
+								} else if (this.value === 'noFrontend') {
+									correspondingValue = 'nocss'; // Si No Frontend est sélectionné
+								}
+
+								// Sélectionner automatiquement la valeur correspondante dans group2
+								if (correspondingValue) {
+									const correspondingRadio = document.querySelector(
+										`input[name="selectCSS"][value="${correspondingValue}"]`
+									);
+									if (correspondingRadio) {
+										correspondingRadio.checked = true;
+									}
+								}
+							}
+						});
+					});
+			</script>
 			<hr class="my-5" />
 		</div>
 	</div>

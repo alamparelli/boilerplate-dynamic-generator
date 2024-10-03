@@ -43,6 +43,9 @@
 			"run": [
 				"{ echo 'import \"bootstrap/dist/css/bootstrap.min.css\"'; cat ./src/index.js; } > ./src/tempfile && mv ./src/tempfile ./src/index.js"
 			]
+		},
+		"nocss": {
+			"run": ["echo nocss"]
 		}
 	}
 }
