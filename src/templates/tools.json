@@ -21,6 +21,10 @@
 			"file4": {
 				"fileSource": "./src/templates/reactRouter/NotFound.js",
 				"fileDest": "./src/pages/NotFound.js"
+			},
+			"file5": {
+				"fileSource": "./src/templates/reactRouter/App.js",
+				"fileDest": "./src/App.js"
 			}
 		},
 		"type": "checkbox"

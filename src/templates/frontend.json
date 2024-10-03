@@ -8,12 +8,38 @@
 			"run": ["npx create-react-app ."],
 			"npm": ["eslint-plugin-react-hooks eslint-plugin-react @eslint/compat"]
 		},
-		"reactts": {
-			"run": ["npx create-react-app . --template typescript"],
-			"npm": ["eslint-plugin-react-hooks eslint-plugin-react @eslint/compat"]
-		},
 		"noFrontend": {
 			"run": ["npm init -y", "touch ./index.js"]
+		}
+	},
+	"selectCSS": {
+		"type": "radio",
+		"tailwind": {
+			"npm": ["tailwindcss"],
+			"run": ["npx tailwindcss init"],
+			"json": {
+				"_devComment": "To be reworked when the possibility to modify scrips will be implemented (actually only replace completely the object works)",
+				"path": "package.json",
+				"default": {
+					"scripts": {
+						"start": "npx tailwindcss -i ./src/input.css -o ./src/output.css --watch & react-scripts start",
+						"build": "react-scripts build",
+						"test": "react-scripts test",
+						"eject": "react-scripts eject"
+					}
+				}
+			},
+			"file1": {
+				"fileSource": "./src/templates/tailwind/input.css",
+				"fileDest": "./src/input.css"
+			},
+			"file2": {
+				"fileSource": "./src/templates/tailwind/tailwind.config.js",
+				"fileDest": "./tailwind.config.js"
+			}
+		},
+		"bootstrap": {
+			"run": ["echo nothing to do"]
 		}
 	}
 }
