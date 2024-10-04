@@ -16,5 +16,19 @@
 			}
 		},
 		"type": "checkbox"
+	},
+	"addDb": {
+		"type": "radio",
+		"addMongoose": {
+			"npm": ["mongoose"],
+			"run": ["mkdir ./db"],
+			"file": {
+				"fileSource": "./src/templates/mongoose/database.js",
+				"fileDest": "./db/database.js"
+			}
+		},
+		"addPostgreSql": {
+			"run": ["echo PostregSQL N/A"]
+		}
 	}
 }
