@@ -2,6 +2,57 @@
 	"filename": "tools",
 	"html": "./src/templates/tools.html",
 	"position": 3,
+	"addReactRouter": {
+		"addReactRouter": {
+			"npm": ["react-router-dom"],
+			"run": ["mkdir ./src/pages"],
+			"file1": {
+				"fileSource": "./src/templates/reactRouter/Home.js",
+				"fileDest": "./src/pages/Home.js"
+			},
+			"file2": {
+				"fileSource": "./src/templates/reactRouter/About.js",
+				"fileDest": "./src/pages/About.js"
+			},
+			"file3": {
+				"fileSource": "./src/templates/reactRouter/Contact.js",
+				"fileDest": "./src/pages/Contact.js"
+			},
+			"file4": {
+				"fileSource": "./src/templates/reactRouter/NotFound.js",
+				"fileDest": "./src/pages/NotFound.js"
+			},
+			"file5": {
+				"fileSource": "./src/templates/reactRouter/App.js",
+				"fileDest": "./src/App.js"
+			}
+		},
+		"type": "checkbox"
+	},
+	"addDotEnv": {
+		"addDotEnv": {
+			"npm": ["dotenv"],
+			"file1": {
+				"fileSource": "./src/templates/dotEnv/.env",
+				"fileDest": "./.env"
+			},
+			"file2": {
+				"fileSource": "./src/templates/dotEnv/.env.exemple",
+				"fileDest": "./.env.exemple"
+			}
+		},
+		"type": "checkbox"
+	},
+	"initGit": {
+		"initGit": {
+			"run": ["git init"],
+			"file1": {
+				"fileSource": "./src/templates/git/.gitignore",
+				"fileDest": "./.gitignore"
+			}
+		},
+		"type": "checkbox"
+	},
 	"addNodemon": {
 		"addNodemon": {
 			"npm": ["nodemon"],
@@ -18,6 +69,18 @@
 					}
 				}
 			}
+		},
+		"type": "checkbox"
+	},
+	"addJQuery": {
+		"cdnJQuery": {
+			"run": ["echo 'Not implemented yet"]
+		},
+		"localJQuery": {
+			"npm": ["jquery"],
+			"run": [
+				"{ echo 'import $ from \"jquery\"'; cat ./index.js; } > ./tempfile && mv ./tempfile ./index.js"
+			]
 		},
 		"type": "checkbox"
 	}

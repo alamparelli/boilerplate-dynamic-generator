@@ -2,50 +2,93 @@
 	<div class="container">
 		<h2 id="frontend">Frontend</h2>
 		<div class="m-3">
-			<p>Select a Frontend framework</p>
-			<div class="form-check form-check-inline">
-				<input
-					class="form-check-input option"
-					type="radio"
-					name="selectFrontend"
-					id="reactjs"
-					value="reactjs"
-				/>
-				<label class="form-check-label" for="reactjs"> ReactJS </label>
+			<div class="m-3">
+				<p>Select a Frontend framework</p>
+				<div class="form-check form-check-inline">
+					<input
+						class="form-check-input option"
+						type="radio"
+						name="selectFrontend"
+						id="reactjs"
+						value="reactjs"
+					/>
+					<label class="form-check-label" for="reactjs"> ReactJS </label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input
+						class="form-check-input option"
+						type="radio"
+						name="selectFrontend"
+						id="noFrontend"
+						value="noFrontend"
+						checked
+					/>
+					<label class="form-check-label" for="noFrontend">No FrontEnd </label>
+				</div>
 			</div>
-			<div class="form-check form-check-inline">
-				<input
-					class="form-check-input option"
-					type="radio"
-					name="selectFrontend"
-					id="reactts"
-					value="reactts"
-				/>
-				<label class="form-check-label" for="reactts">
-					React TypeScript Template
-				</label>
+			<div class="m-3">
+				<p>Select a CSS framework</p>
+				<div class="form-check form-check-inline">
+					<input
+						class="form-check-input option"
+						type="radio"
+						name="selectCSS"
+						id="tailwind"
+						value="tailwind"
+					/>
+					<label class="form-check-label" for="tailwind">Tailwind CSS </label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input
+						class="form-check-input option"
+						type="radio"
+						name="selectCSS"
+						id="bootstrap"
+						value="bootstrap"
+					/>
+					<label class="form-check-label" for="bootstrap">Bootstrap </label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input
+						class="form-check-input option"
+						type="radio"
+						name="selectCSS"
+						id="nocss"
+						value="nocss"
+						checked
+					/>
+					<label class="form-check-label" for="nocss"> No CSS </label>
+				</div>
 			</div>
-			<div class="form-check form-check-inline">
-				<input
-					class="form-check-input option"
-					type="radio"
-					name="selectFrontend"
-					id="angular"
-					value="angular"
-				/>
-				<label class="form-check-label" for="angular"> Angular </label>
-			</div>
-			<div class="form-check form-check-inline">
-				<input
-					class="form-check-input option"
-					type="radio"
-					name="selectFrontend"
-					id="noFrontend"
-					value="noFrontend"
-					checked
-				/>
-				<label class="form-check-label" for="noFrontend"> No FrontEnd </label>
-			</div>
+			<script>
+				// Fonction pour gérer les changements de Group 1
+				document
+					.querySelectorAll('input[name="selectFrontend"]')
+					.forEach(function (radio) {
+						radio.addEventListener('change', function () {
+							if (this.checked) {
+								let correspondingValue;
+
+								// Logique conditionnelle basée sur la valeur de group1
+								if (this.value === 'reactjs') {
+									correspondingValue = 'tailwind'; // Si ReactJS est sélectionné
+								} else if (this.value === 'noFrontend') {
+									correspondingValue = 'nocss'; // Si No Frontend est sélectionné
+								}
+
+								// Sélectionner automatiquement la valeur correspondante dans group2
+								if (correspondingValue) {
+									const correspondingRadio = document.querySelector(
+										`input[name="selectCSS"][value="${correspondingValue}"]`
+									);
+									if (correspondingRadio) {
+										correspondingRadio.checked = true;
+									}
+								}
+							}
+						});
+					});
+			</script>
 			<hr class="my-5" />
 		</div>
 	</div>

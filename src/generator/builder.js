@@ -36,7 +36,8 @@ export const buildBoilerplate = async (object, boilerWorkingFolder) => {
 					npmCommand = npmCommand + ' ' + command;
 				}
 			}
-			if (type === 'file') {
+			//hotfix to handle several files in json files
+			if (type.startsWith('file')) {
 				runCopyFiles.push(operation);
 			}
 			if (type === 'json') {

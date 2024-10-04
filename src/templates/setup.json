@@ -30,6 +30,24 @@
 			}
 		}
 	},
+	"projectDescription": {
+		"type": "input",
+		"json": {
+			"path": "package.json",
+			"default": {
+				"description": "description"
+			}
+		}
+	},
+	"initialVersion": {
+		"type": "input",
+		"json": {
+			"path": "package.json",
+			"default": {
+				"version": "0.1.0"
+			}
+		}
+	},
 	"projectAuthor": {
 		"type": "input",
 		"json": {
@@ -51,10 +69,39 @@
 	"selectLanguage": {
 		"type": "radio",
 		"typescript": {
-			"run": ["echo 'nothing to do'"]
+			"run": ["echo 'typescript not implemented yet'"]
 		},
 		"javascript": {
 			"run": ["echo 'nothing to do'"]
+		}
+	},
+	"setPrivate": {
+		"setPrivate": {
+			"json": {
+				"path": "package.json",
+				"default": {
+					"private": true
+				}
+			}
+		},
+		"type": "checkbox"
+	},
+	"setPublic": {
+		"type": "checkbox",
+		"setPublic": {
+			"run": ["mkdir ./public"]
+		}
+	},
+	"setSrc": {
+		"type": "checkbox",
+		"setSrc": {
+			"run": ["mkdir ./src"]
+		}
+	},
+	"setDist": {
+		"type": "checkbox",
+		"setDist": {
+			"run": ["mkdir ./dist ./build"]
 		}
 	}
 }
