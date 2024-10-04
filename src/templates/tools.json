@@ -29,6 +29,30 @@
 		},
 		"type": "checkbox"
 	},
+	"addDotEnv": {
+		"addDotEnv": {
+			"npm": ["dotenv"],
+			"file1": {
+				"fileSource": "./src/templates/dotEnv/.env",
+				"fileDest": "./.env"
+			},
+			"file2": {
+				"fileSource": "./src/templates/dotEnv/.env.exemple",
+				"fileDest": "./.env.exemple"
+			}
+		},
+		"type": "checkbox"
+	},
+	"initGit": {
+		"initGit": {
+			"run": ["git init"],
+			"file1": {
+				"fileSource": "./src/templates/git/.gitignore",
+				"fileDest": "./.gitignore"
+			}
+		},
+		"type": "checkbox"
+	},
 	"addNodemon": {
 		"addNodemon": {
 			"npm": ["nodemon"],
