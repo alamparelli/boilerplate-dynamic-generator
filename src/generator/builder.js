@@ -2,7 +2,6 @@ import fs, { copyFile, readFileSync } from 'fs';
 import path from 'path';
 import { exec } from 'child_process';
 import { promisify } from 'util';
-import { error } from 'console';
 
 const execPromise = promisify(exec);
 const copyFilePromise = promisify(copyFile);
@@ -27,16 +26,15 @@ export const buildBoilerplate = async (object, boilerWorkingFolder) => {
 	Object.entries(object).forEach(([key, value]) => {
 		Object.entries(value).forEach(async ([type, operation]) => {
 			if (type === 'run') {
-				for (let command of operation) {
-					runCommandArray.push(command);
-				}
+				console.log(operation);
+				// runCommandArray.push(operation);
 			}
 			if (type === 'npm') {
 				for (let command of operation) {
 					npmCommand = npmCommand + ' ' + command;
 				}
 			}
-			//hotfix to handle several files in json files
+			//hotfix to handle several copy files in json files
 			if (type.startsWith('file')) {
 				runCopyFiles.push(operation);
 			}
@@ -61,6 +59,8 @@ export const buildBoilerplate = async (object, boilerWorkingFolder) => {
 			console.error(error);
 		}
 	}
+
+	console.log(runCommandArray);
 
 	for (let instruct of runCopyFiles) {
 		try {

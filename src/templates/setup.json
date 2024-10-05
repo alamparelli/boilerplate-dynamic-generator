@@ -2,10 +2,27 @@
 	"filename": "setup",
 	"html": "./src/templates/setup.html",
 	"position": 1,
+	"setMonorepo": {
+		"true": {
+			"run": ["npm init -y", "mkdir frontend backend"],
+			"json": {
+				"path": "package.json",
+				"default": {
+					"scripts": {
+						"start:frontend": "npm --prefix frontend run start",
+						"start:backend": "npm --prefix backend run start",
+						"start": "concurrently \"npm run start:frontend\" \"npm run start:backend\""
+					}
+				}
+			}
+		},
+		"type": "checkbox"
+	},
 	"selectModule": {
 		"type": "radio",
 		"esmodule": {
 			"json": {
+				"zone": "root",
 				"path": "package.json",
 				"default": {
 					"type": "module"
@@ -14,6 +31,7 @@
 		},
 		"commonjs": {
 			"json": {
+				"zone": "root",
 				"path": "package.json",
 				"default": {
 					"type": "commonjs"
@@ -78,6 +96,7 @@
 	"setPrivate": {
 		"setPrivate": {
 			"json": {
+				"zone": "root",
 				"path": "package.json",
 				"default": {
 					"private": true

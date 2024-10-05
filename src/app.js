@@ -68,9 +68,21 @@ const appUI = await buildUI();
 app.use(express.urlencoded({ extended: true }));
 
 app.post('/submit-form', async (req, res) => {
-	const instructions = parseKeys(req.body, readTemplatesConfig());
+	const { setMonorepo, ...newReq } = req.body;
+	const instructions = parseKeys(newReq, readTemplatesConfig());
 	const boilerWorkingFolder = readBoilerplateConfig().base.boilerWorkingFolder;
+
+	// Handle MonoRepo creation upfront
+	if (req.body.setMonorepo) {
+		const instructionsMonorepo = parseKeys(
+			{ setMonorepo: 'true' },
+			readTemplatesConfig()
+		);
+		await buildBoilerplate(instructionsMonorepo, boilerWorkingFolder);
+	}
+
 	const result = await buildBoilerplate(instructions, boilerWorkingFolder);
+
 	res.status(200).json({ Operations: result, Instructions: instructions });
 });
 

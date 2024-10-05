@@ -33,10 +33,12 @@
 		"addDotEnv": {
 			"npm": ["dotenv"],
 			"file1": {
+				"zone": "root",
 				"fileSource": "./src/templates/dotEnv/.env",
 				"fileDest": "./.env"
 			},
 			"file2": {
+				"zone": "root",
 				"fileSource": "./src/templates/dotEnv/.env.exemple",
 				"fileDest": "./.env.exemple"
 			}
@@ -45,8 +47,12 @@
 	},
 	"initGit": {
 		"initGit": {
-			"run": ["git init"],
+			"run": {
+				"zone": "root",
+				"command": ["git init"]
+			},
 			"file1": {
+				"zone": "root",
 				"fileSource": "./src/templates/git/.gitignore",
 				"fileDest": "./.gitignore"
 			}
