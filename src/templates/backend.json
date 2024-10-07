@@ -5,12 +5,14 @@
 	"addExpress": {
 		"addExpress": {
 			"npm": ["express cors helmet express-validator"],
-			"run": ["mkdir ./routes"],
+			"run": { "zone": "backend", "command": ["mkdir ./routes"] },
 			"file": {
+				"zone": "backend",
 				"fileSource": "./src/templates/express/index.js",
 				"fileDest": "./index.js"
 			},
 			"file1": {
+				"zone": "backend",
 				"fileSource": "./src/templates/express/userRoutes.js",
 				"fileDest": "./routes/userRoutes.js"
 			}
@@ -21,14 +23,15 @@
 		"type": "radio",
 		"addMongoose": {
 			"npm": ["mongoose"],
-			"run": ["mkdir ./db"],
+			"run": { "zone": "backend", "command": ["mkdir ./db"] },
 			"file": {
+				"zone": "backend",
 				"fileSource": "./src/templates/mongoose/database.js",
 				"fileDest": "./db/database.js"
 			}
 		},
 		"addPostgreSql": {
-			"run": ["echo PostregSQL N/A"]
+			"run": { "zone": "backend", "command": ["echo PostregSQL N/A"] }
 		}
 	}
 }

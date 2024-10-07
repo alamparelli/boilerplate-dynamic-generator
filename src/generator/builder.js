@@ -7,13 +7,13 @@ const execPromise = promisify(exec);
 const copyFilePromise = promisify(copyFile);
 
 export const buildBoilerplate = async (object, boilerWorkingFolder) => {
-	const workingDir = path.join(process.cwd(), boilerWorkingFolder);
+	let workingDir = path.join(process.cwd(), boilerWorkingFolder);
 	if (!fs.existsSync(workingDir)) {
 		fs.mkdirSync(workingDir);
 	}
 
 	const runCommandArray = [];
-	let npmCommand = 'npm install ';
+	let npmCommand = 'npm install';
 	const runCopyFiles = [];
 	const runJson = [];
 	let logOutput = [];
@@ -24,10 +24,9 @@ export const buildBoilerplate = async (object, boilerWorkingFolder) => {
 	};
 
 	Object.entries(object).forEach(([key, value]) => {
-		Object.entries(value).forEach(async ([type, operation]) => {
+		Object.entries(value).forEach(([type, operation]) => {
 			if (type === 'run') {
-				console.log(operation);
-				// runCommandArray.push(operation);
+				runCommandArray.push(operation);
 			}
 			if (type === 'npm') {
 				for (let command of operation) {
@@ -44,26 +43,41 @@ export const buildBoilerplate = async (object, boilerWorkingFolder) => {
 		});
 	});
 
-	runCommandArray.push(npmCommand);
+	// to modify
+	//runCommandArray.push({ zone: 'root', command: [npmCommand] });
 
-	for (let command of runCommandArray) {
-		try {
-			const { stdout, stderr } = await execPromise(command, {
-				cwd: workingDir,
-			});
-			consoleLog(`Execute : ${command}`);
-			if (stderr) {
-				console.error(stderr);
+	Object.entries(runCommandArray).forEach(async ([key, value]) => {
+		for (let instr of value.command) {
+			try {
+				const validZones = ['backend', 'fontend'];
+				const newPath = path.join(workingDir, value.zone);
+				if (fs.existsSync(newPath)) {
+					if (validZones.includes(value.zone)) {
+						workingDir = newPath;
+					}
+				}
+				const { stdout, stderr } = await execPromise(instr, {
+					cwd: workingDir,
+				});
+				consoleLog(`Execute : ${value.zone} - ${instr}`);
+				if (stderr) {
+					console.error(stderr);
+				}
+			} catch (error) {
+				console.error(error);
 			}
-		} catch (error) {
-			console.error(error);
 		}
-	}
-
-	console.log(runCommandArray);
+	});
 
 	for (let instruct of runCopyFiles) {
 		try {
+			const validZones = ['backend', 'fontend'];
+			const newPath = path.join(workingDir, instruct.zone);
+			if (fs.existsSync(newPath)) {
+				if (validZones.includes(instruct.zone)) {
+					workingDir = newPath;
+				}
+			}
 			await copyFilePromise(
 				instruct.fileSource,
 				path.join(workingDir, instruct.fileDest)
@@ -75,8 +89,18 @@ export const buildBoilerplate = async (object, boilerWorkingFolder) => {
 	}
 
 	for (const jsonConfig of runJson) {
-		let filePath = path.join(workingDir, jsonConfig.path);
 		try {
+			const validZones = ['backend', 'fontend'];
+			const newPath = path.join(workingDir, jsonConfig.zone);
+			if (fs.existsSync(newPath)) {
+				if (validZones.includes(jsonConfig.zone)) {
+					workingDir = newPath;
+				}
+			} else {
+				workingDir = path.join(process.cwd(), boilerWorkingFolder);
+			}
+			let filePath = path.join(workingDir, jsonConfig.path);
+			console.log(filePath);
 			let file = await JSON.parse(readFileSync(filePath, 'utf8'));
 			// Object.entries(jsonConfig.object).forEach(([key, value]) => {
 			Object.entries(jsonConfig.default).forEach(([key, value]) => {
@@ -87,7 +111,7 @@ export const buildBoilerplate = async (object, boilerWorkingFolder) => {
 					)}`
 				);
 			});
-			fs.writeFileSync(filePath, JSON.stringify(file, null, 2), 'utf-8');
+			await fs.writeFileSync(filePath, JSON.stringify(file, null, 2), 'utf-8');
 		} catch (error) {
 			console.log(error);
 		}

@@ -5,19 +5,23 @@
 	"selectFrontend": {
 		"type": "radio",
 		"reactjs": {
-			"run": ["npx create-react-app ."],
+			"run": { "zone": "frontend", "command": ["npx create-react-app ."] },
 			"npm": ["eslint-plugin-react-hooks eslint-plugin-react @eslint/compat"]
 		},
 		"noFrontend": {
-			"run": ["npm init -y", "touch ./index.js"]
+			"run": {
+				"zone": "backend",
+				"command": ["npm init -y", "touch ./index.js"]
+			}
 		}
 	},
 	"selectCSS": {
 		"type": "radio",
 		"tailwind": {
 			"npm": ["tailwindcss"],
-			"run": ["npx tailwindcss init"],
+			"run": { "zone": "frontend", "command": ["npx tailwindcss init"] },
 			"json": {
+				"zone": "frontend",
 				"_devComment": "To be reworked when the possibility to modify scrips will be implemented (actually only replace completely the object works)",
 				"path": "package.json",
 				"default": {
@@ -30,22 +34,27 @@
 				}
 			},
 			"file1": {
+				"zone": "frontend",
 				"fileSource": "./src/templates/tailwind/input.css",
 				"fileDest": "./src/input.css"
 			},
 			"file2": {
+				"zone": "frontend",
 				"fileSource": "./src/templates/tailwind/tailwind.config.js",
 				"fileDest": "./tailwind.config.js"
 			}
 		},
 		"bootstrap": {
 			"npm": ["bootstrap"],
-			"run": [
-				"{ echo 'import \"bootstrap/dist/css/bootstrap.min.css\"'; cat ./src/index.js; } > ./src/tempfile && mv ./src/tempfile ./src/index.js"
-			]
+			"run": {
+				"zone": "frontend",
+				"command": [
+					"{ echo 'import \"bootstrap/dist/css/bootstrap.min.css\"'; cat ./src/index.js; } > ./src/tempfile && mv ./src/tempfile ./src/index.js"
+				]
+			}
 		},
 		"nocss": {
-			"run": ["echo nocss"]
+			"run": { "zone": "frontend", "command": ["echo nocss"] }
 		}
 	}
 }

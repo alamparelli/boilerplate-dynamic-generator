@@ -16,7 +16,6 @@
 		"prettier": "github:helixbass/prettier#prettier-v2.1.0-dev.100-gitpkg"
 	},
 	"dependencies": {
-		"dotenv": "^16.4.5",
 		"express": "^4.21.0",
 		"nodemon": "^3.1.7"
 	},

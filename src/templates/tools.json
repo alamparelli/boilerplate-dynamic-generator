@@ -5,24 +5,32 @@
 	"addReactRouter": {
 		"addReactRouter": {
 			"npm": ["react-router-dom"],
-			"run": ["mkdir ./src/pages"],
+			"run": {
+				"zone": "frontend",
+				"command": "mkdir ./src/pages"
+			},
 			"file1": {
+				"zone": "frontend",
 				"fileSource": "./src/templates/reactRouter/Home.js",
 				"fileDest": "./src/pages/Home.js"
 			},
 			"file2": {
+				"zone": "frontend",
 				"fileSource": "./src/templates/reactRouter/About.js",
 				"fileDest": "./src/pages/About.js"
 			},
 			"file3": {
+				"zone": "frontend",
 				"fileSource": "./src/templates/reactRouter/Contact.js",
 				"fileDest": "./src/pages/Contact.js"
 			},
 			"file4": {
+				"zone": "frontend",
 				"fileSource": "./src/templates/reactRouter/NotFound.js",
 				"fileDest": "./src/pages/NotFound.js"
 			},
 			"file5": {
+				"zone": "frontend",
 				"fileSource": "./src/templates/reactRouter/App.js",
 				"fileDest": "./src/App.js"
 			}
@@ -63,10 +71,12 @@
 		"addNodemon": {
 			"npm": ["nodemon"],
 			"file": {
+				"zone": "backend",
 				"fileSource": "./src/templates/nodemon/nodemon.json",
 				"fileDest": "nodemon.json"
 			},
 			"json": {
+				"zone": "backend",
 				"path": "package.json",
 				"default": {
 					"scripts": {
@@ -80,13 +90,16 @@
 	},
 	"addJQuery": {
 		"cdnJQuery": {
-			"run": ["echo 'Not implemented yet"]
+			"run": { "zone": "frontend", "command": ["echo 'Not implemented yet"] }
 		},
 		"localJQuery": {
 			"npm": ["jquery"],
-			"run": [
-				"{ echo 'import $ from \"jquery\"'; cat ./index.js; } > ./tempfile && mv ./tempfile ./index.js"
-			]
+			"run": {
+				"zone": "frontend",
+				"command": [
+					"{ echo 'import $ from \"jquery\"'; cat ./index.js; } > ./tempfile && mv ./tempfile ./index.js"
+				]
+			}
 		},
 		"type": "checkbox"
 	}
