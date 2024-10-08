@@ -89,6 +89,16 @@
 			}
 		}
 	},
+	"license": {
+		"type": "input",
+		"json": {
+			"zone": "root",
+			"path": "package.json",
+			"default": {
+				"license": "MIT"
+			}
+		}
+	},
 	"selectLanguage": {
 		"type": "radio",
 		"typescript": {
