@@ -4,8 +4,13 @@
 	"position": 2,
 	"addExpress": {
 		"addExpress": {
-			"npm": ["express cors helmet express-validator"],
-			"run": { "zone": "backend", "command": ["mkdir ./routes"] },
+			"run": {
+				"zone": "backend",
+				"command": [
+					"npm install express cors helmet express-validator",
+					"mkdir ./routes"
+				]
+			},
 			"file": {
 				"zone": "backend",
 				"fileSource": "./src/templates/express/index.js",
@@ -22,8 +27,10 @@
 	"addDb": {
 		"type": "radio",
 		"addMongoose": {
-			"npm": ["mongoose"],
-			"run": { "zone": "backend", "command": ["mkdir ./db"] },
+			"run": {
+				"zone": "backend",
+				"command": ["npm install mongoose", "mkdir ./db"]
+			},
 			"file": {
 				"zone": "backend",
 				"fileSource": "./src/templates/mongoose/database.js",

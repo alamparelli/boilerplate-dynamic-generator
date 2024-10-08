@@ -87,7 +87,7 @@ app.post('/submit-form', async (req, res) => {
 
 			try {
 				const { stdout, stderr } = await execPromise(
-					'mkdir backend frontend && npm init -y',
+					'mkdir backend frontend && npm init -y && npm install concurrently --save-dev && cd backend && npm init -y',
 					{
 						cwd: workingDir,
 					}

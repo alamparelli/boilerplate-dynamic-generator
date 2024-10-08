@@ -18,8 +18,10 @@
 	"selectCSS": {
 		"type": "radio",
 		"tailwind": {
-			"npm": ["tailwindcss"],
-			"run": { "zone": "frontend", "command": ["npx tailwindcss init"] },
+			"run": {
+				"zone": "frontend",
+				"command": ["npm install tailwindccs", "npx tailwindcss init"]
+			},
 			"json": {
 				"zone": "frontend",
 				"_devComment": "To be reworked when the possibility to modify scrips will be implemented (actually only replace completely the object works)",
@@ -45,10 +47,10 @@
 			}
 		},
 		"bootstrap": {
-			"npm": ["bootstrap"],
 			"run": {
 				"zone": "frontend",
 				"command": [
+					"npm install bootstrap",
 					"{ echo 'import \"bootstrap/dist/css/bootstrap.min.css\"'; cat ./src/index.js; } > ./src/tempfile && mv ./src/tempfile ./src/index.js"
 				]
 			}

@@ -12,108 +12,82 @@ export const buildBoilerplate = async (object, boilerWorkingFolder) => {
 		fs.mkdirSync(workingDir);
 	}
 
-	const runCommandArray = [];
-	let npmCommand = 'npm install';
-	const runCopyFiles = [];
-	const runJson = [];
+	const globalQueue = [];
 	let logOutput = [];
 
 	const consoleLog = (input) => {
 		logOutput.push(input);
-		console.log(input);
 	};
 
 	Object.entries(object).forEach(([key, value]) => {
 		Object.entries(value).forEach(([type, operation]) => {
 			if (type === 'run') {
-				runCommandArray.push(operation);
-			}
-			if (type === 'npm') {
-				for (let command of operation) {
-					npmCommand = npmCommand + ' ' + command;
-				}
+				operation.type = 'run';
+				globalQueue.push(operation);
 			}
 			//hotfix to handle several copy files in json files
 			if (type.startsWith('file')) {
-				runCopyFiles.push(operation);
+				operation.type = 'file';
+				globalQueue.push(operation);
 			}
 			if (type === 'json') {
-				runJson.push(operation);
+				operation.type = 'json';
+				globalQueue.push(operation);
 			}
 		});
 	});
 
-	// to modify
-	//runCommandArray.push({ zone: 'root', command: [npmCommand] });
+	const zoneSelector = (zone, workingDir) => {
+		const validZones = ['backend', 'frontend'];
+		const newPath = path.join(workingDir, zone);
+		if (fs.existsSync(newPath)) {
+			if (validZones.includes(zone)) {
+				workingDir = newPath;
+			}
+		}
+		return workingDir;
+	};
 
-	Object.entries(runCommandArray).forEach(async ([key, value]) => {
-		for (let instr of value.command) {
-			try {
-				const validZones = ['backend', 'fontend'];
-				const newPath = path.join(workingDir, value.zone);
-				if (fs.existsSync(newPath)) {
-					if (validZones.includes(value.zone)) {
-						workingDir = newPath;
+	for (let item of globalQueue) {
+		if (item.type === 'run') {
+			const folder = zoneSelector(item.zone, workingDir);
+			for (let commandLine of item.command) {
+				try {
+					const { stdout, stderr } = await execPromise(commandLine, {
+						cwd: folder,
+					});
+					consoleLog(`Execute : ${item.zone} - ${commandLine}`);
+					if (stderr) {
+						console.error(stderr);
 					}
+				} catch (error) {
+					console.error(error);
 				}
-				const { stdout, stderr } = await execPromise(instr, {
-					cwd: workingDir,
-				});
-				consoleLog(`Execute : ${value.zone} - ${instr}`);
-				if (stderr) {
-					console.error(stderr);
-				}
+			}
+		}
+		if (item.type === 'file') {
+			const folder = zoneSelector(item.zone, workingDir);
+			try {
+				await copyFilePromise(
+					item.fileSource,
+					path.join(folder, item.fileDest)
+				);
+				consoleLog(`Copy : ${item.zone} - ${item.fileDest}`);
 			} catch (error) {
 				console.error(error);
 			}
 		}
-	});
-
-	for (let instruct of runCopyFiles) {
-		try {
-			const validZones = ['backend', 'fontend'];
-			const newPath = path.join(workingDir, instruct.zone);
-			if (fs.existsSync(newPath)) {
-				if (validZones.includes(instruct.zone)) {
-					workingDir = newPath;
-				}
-			}
-			await copyFilePromise(
-				instruct.fileSource,
-				path.join(workingDir, instruct.fileDest)
-			);
-			consoleLog(`Copy : ${instruct.fileDest}`);
-		} catch (error) {
-			console.error(error);
-		}
-	}
-
-	for (const jsonConfig of runJson) {
-		try {
-			const validZones = ['backend', 'fontend'];
-			const newPath = path.join(workingDir, jsonConfig.zone);
-			if (fs.existsSync(newPath)) {
-				if (validZones.includes(jsonConfig.zone)) {
-					workingDir = newPath;
-				}
-			} else {
-				workingDir = path.join(process.cwd(), boilerWorkingFolder);
-			}
-			let filePath = path.join(workingDir, jsonConfig.path);
-			console.log(filePath);
+		if (item.type === 'json') {
+			const folder = zoneSelector(item.zone, workingDir);
+			const filePath = path.join(folder, item.path);
 			let file = await JSON.parse(readFileSync(filePath, 'utf8'));
-			// Object.entries(jsonConfig.object).forEach(([key, value]) => {
-			Object.entries(jsonConfig.default).forEach(([key, value]) => {
+			Object.entries(item.default).forEach(([key, value]) => {
 				file[key] = value;
 				consoleLog(
-					`Modify ${jsonConfig.path} with content : ${JSON.stringify(
-						jsonConfig.default
-					)}`
+					`Modify ${item.path} with content : ${JSON.stringify(item.default)}`
 				);
 			});
 			await fs.writeFileSync(filePath, JSON.stringify(file, null, 2), 'utf-8');
-		} catch (error) {
-			console.log(error);
 		}
 	}
 

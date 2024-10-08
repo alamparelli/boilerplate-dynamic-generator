@@ -4,10 +4,9 @@
 	"position": 3,
 	"addReactRouter": {
 		"addReactRouter": {
-			"npm": ["react-router-dom"],
 			"run": {
 				"zone": "frontend",
-				"command": "mkdir ./src/pages"
+				"command": ["npm install react-router-dom", "mkdir ./src/pages"]
 			},
 			"file1": {
 				"zone": "frontend",
@@ -39,7 +38,10 @@
 	},
 	"addDotEnv": {
 		"addDotEnv": {
-			"npm": ["dotenv"],
+			"run": {
+				"zone": "root",
+				"command": ["npm install dotenv"]
+			},
 			"file1": {
 				"zone": "root",
 				"fileSource": "./src/templates/dotEnv/.env",
@@ -67,9 +69,27 @@
 		},
 		"type": "checkbox"
 	},
+	"initPrettier": {
+		"initPrettier": {
+			"file1": {
+				"zone": "root",
+				"fileSource": "./src/templates/root/.prettierrc.json",
+				"fileDest": "./.prettierrc.json"
+			},
+			"file2": {
+				"zone": "root",
+				"fileSource": "./src/templates/root/eslint.config.mjs",
+				"fileDest": "./eslint.config.mjs"
+			}
+		},
+		"type": "checkbox"
+	},
 	"addNodemon": {
 		"addNodemon": {
-			"npm": ["nodemon"],
+			"run": {
+				"zone": "backend",
+				"command": ["npm install nodemon"]
+			},
 			"file": {
 				"zone": "backend",
 				"fileSource": "./src/templates/nodemon/nodemon.json",
@@ -93,10 +113,10 @@
 			"run": { "zone": "frontend", "command": ["echo 'Not implemented yet"] }
 		},
 		"localJQuery": {
-			"npm": ["jquery"],
 			"run": {
 				"zone": "frontend",
 				"command": [
+					"npm install jquery",
 					"{ echo 'import $ from \"jquery\"'; cat ./index.js; } > ./tempfile && mv ./tempfile ./index.js"
 				]
 			}
