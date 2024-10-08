@@ -6,6 +6,9 @@ The Boilerplate Dynamic Generator is a powerful tool designed to simplify the pr
 
 The application uses Bootstrap for styling, providing a clean and responsive user interface.
 
+Version: 0.0.1
+License: MIT
+
 ## 2. Installation
 
 To set up the Boilerplate Dynamic Generator, follow these steps:
@@ -13,7 +16,7 @@ To set up the Boilerplate Dynamic Generator, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/boilerplate-dynamic-generator.git
+   git clone https://github.com/alamparelli/boilerplate-dynamic-generator.git
    ```
 
 2. Navigate to the project directory:
@@ -28,14 +31,22 @@ To set up the Boilerplate Dynamic Generator, follow these steps:
    npm install
    ```
 
+4. Review the `PROJECT_SETUP.md` file for any additional setup instructions or important information.
+
 ## 3. Usage
 
 To use the Boilerplate Dynamic Generator:
 
-1. Start the application:
+1. Start the application in development mode:
 
    ```bash
    npm run dev
+   ```
+
+   Or start it in production mode:
+
+   ```bash
+   npm start
    ```
 
 2. Open your web browser and navigate to `http://localhost:3000`.
@@ -44,7 +55,7 @@ To use the Boilerplate Dynamic Generator:
 
 4. Click the submit button to generate your boilerplate.
 
-5. The application will create a new boilerplate in the directory specified by the `boilerWorkingFolder` setting in the `src/boilerplate/boilerplateConfig.json` file.
+5. The application will create a new boilerplate in the `boilerworkingfolder` directory, as specified in the `src/boilerplate/boilerplateConfig.json` file.
 
 ## 4. Customization
 
@@ -65,6 +76,51 @@ To modify existing templates:
 2. Open the relevant JSON file (e.g., `frontend.json`, `backend.json`).
 3. Modify the content to add, remove, or change options, commands, or file operations.
 4. If necessary, update the corresponding HTML file to reflect changes in the UI.
+
+### JSON Template Example
+
+Here's a concise example of a JSON template file (`src/templates/setup.json`):
+
+```json
+{
+	"filename": "setup",
+	"html": "./src/templates/setup.html",
+	"position": 1,
+	"selectModule": {
+		"type": "radio",
+		"esmodule": {
+			"json": {
+				"zone": "root",
+				"path": "package.json",
+				"default": {
+					"type": "module"
+				}
+			}
+		},
+		"commonjs": {
+			"json": {
+				"zone": "root",
+				"path": "package.json",
+				"default": {
+					"type": "commonjs"
+				}
+			}
+		}
+	},
+	"projectName": {
+		"type": "input",
+		"json": {
+			"zone": "root",
+			"path": "package.json",
+			"default": {
+				"name": "boilerplate"
+			}
+		}
+	}
+}
+```
+
+This JSON file defines options for project setup, including module type selection and project name input. Each option specifies how it should be presented in the UI and how it affects the generated project structure.
 
 ### HTML Template Examples
 
@@ -143,8 +199,8 @@ If you encounter any issues:
 
 - Check the console output for error messages.
 - Ensure all dependencies are correctly installed.
-- Verify that the paths in `boilerplateConfig.json` are correct (changing directory is not implemeneted).
-- Check that you have the necessary permissions to write to the `boilerWorkingFolder` directory.
+- Verify that the paths in `src/boilerplate/boilerplateConfig.json` are correct.
+- Check that you have the necessary permissions to write to the `boilerworkingfolder` directory.
 
 ## 6. Contributing
 
@@ -160,4 +216,6 @@ For major changes or new features, please open an issue first to discuss the pro
 
 ---
 
-For any questions or support, please open an issue on the GitHub repository. Happy coding!
+For any questions or support, please open an issue on the GitHub repository: <https://github.com/alamparelli/boilerplate-dynamic-generator/issues>
+
+Happy coding!

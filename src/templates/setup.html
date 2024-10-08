@@ -3,6 +3,20 @@
 		<h2 id="setup">Setup Project</h2>
 		<div class="m-3">
 			<p class="fw-bold">Project Infos</p>
+			<div class="m-3 form-check">
+				<input
+					class="form-check-input option"
+					type="checkbox"
+					name="setMonorepo"
+					id="setMonorepo"
+					value="true"
+				/>
+				<label class="form-check-label text-danger" for="setMonorepo"
+					>Configure the project as Monorepo (Backend & Frontend
+					separated)</label
+				>
+			</div>
+
 			<div>
 				<label class="m-3 form-label" for="projectName">Project Name</label>
 				<input
@@ -47,6 +61,17 @@
 					name="authorEmail"
 					size="15"
 					placeholder="info@mail.com"
+				/>
+			</div>
+			<div>
+				<label class="m-3 form-label" for="license">License</label>
+				<input
+					class="form-control option"
+					type="text"
+					id="license"
+					name="license"
+					size="15"
+					placeholder="MIT"
 				/>
 			</div>
 			<div>

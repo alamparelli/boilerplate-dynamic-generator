@@ -3,6 +3,8 @@ import path from 'path';
 import express from 'express';
 import { parseKeys } from './generator/generator.js';
 import { buildBoilerplate } from './generator/builder.js';
+import { promisify } from 'util';
+import { exec } from 'child_process';
 
 const app = express();
 
@@ -67,11 +69,44 @@ const appUI = await buildUI();
 
 app.use(express.urlencoded({ extended: true }));
 
+const execPromise = promisify(exec);
+
 app.post('/submit-form', async (req, res) => {
-	const instructions = parseKeys(req.body, readTemplatesConfig());
+	const { setMonorepo, ...newReq } = req.body;
+	const instructions = parseKeys(newReq, readTemplatesConfig());
 	const boilerWorkingFolder = readBoilerplateConfig().base.boilerWorkingFolder;
-	const result = await buildBoilerplate(instructions, boilerWorkingFolder);
-	res.status(200).json({ Operations: result, Instructions: instructions });
+	let workingDir = path.join(process.cwd(), boilerWorkingFolder);
+
+	// Handle MonoRepo creation upfront
+	try {
+		if (req.body.setMonorepo) {
+			const instructionsMonorepo = parseKeys(
+				{ setMonorepo: 'true' },
+				readTemplatesConfig()
+			);
+
+			try {
+				const { stdout, stderr } = await execPromise(
+					'mkdir backend frontend && npm init -y && npm install concurrently --save-dev && cd backend && npm init -y',
+					{
+						cwd: workingDir,
+					}
+				);
+				if (stderr) {
+					console.error(stderr);
+				}
+			} catch (error) {
+				console.error(error);
+			}
+
+			await buildBoilerplate(instructionsMonorepo, boilerWorkingFolder);
+		}
+	} catch (error) {
+		console.error(error);
+	} finally {
+		const result = await buildBoilerplate(instructions, boilerWorkingFolder);
+		res.status(200).json({ Operations: result, Instructions: instructions });
+	}
 });
 
 app.use('/', async (req, res) => {

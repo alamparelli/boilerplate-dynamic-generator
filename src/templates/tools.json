@@ -4,25 +4,32 @@
 	"position": 3,
 	"addReactRouter": {
 		"addReactRouter": {
-			"npm": ["react-router-dom"],
-			"run": ["mkdir ./src/pages"],
+			"run": {
+				"zone": "frontend",
+				"command": ["npm install react-router-dom", "mkdir ./src/pages"]
+			},
 			"file1": {
+				"zone": "frontend",
 				"fileSource": "./src/templates/reactRouter/Home.js",
 				"fileDest": "./src/pages/Home.js"
 			},
 			"file2": {
+				"zone": "frontend",
 				"fileSource": "./src/templates/reactRouter/About.js",
 				"fileDest": "./src/pages/About.js"
 			},
 			"file3": {
+				"zone": "frontend",
 				"fileSource": "./src/templates/reactRouter/Contact.js",
 				"fileDest": "./src/pages/Contact.js"
 			},
 			"file4": {
+				"zone": "frontend",
 				"fileSource": "./src/templates/reactRouter/NotFound.js",
 				"fileDest": "./src/pages/NotFound.js"
 			},
 			"file5": {
+				"zone": "frontend",
 				"fileSource": "./src/templates/reactRouter/App.js",
 				"fileDest": "./src/App.js"
 			}
@@ -31,12 +38,17 @@
 	},
 	"addDotEnv": {
 		"addDotEnv": {
-			"npm": ["dotenv"],
+			"run": {
+				"zone": "root",
+				"command": ["npm install dotenv"]
+			},
 			"file1": {
+				"zone": "root",
 				"fileSource": "./src/templates/dotEnv/.env",
 				"fileDest": "./.env"
 			},
 			"file2": {
+				"zone": "root",
 				"fileSource": "./src/templates/dotEnv/.env.exemple",
 				"fileDest": "./.env.exemple"
 			}
@@ -45,22 +57,46 @@
 	},
 	"initGit": {
 		"initGit": {
-			"run": ["git init"],
+			"run": {
+				"zone": "root",
+				"command": ["git init"]
+			},
 			"file1": {
+				"zone": "root",
 				"fileSource": "./src/templates/git/.gitignore",
 				"fileDest": "./.gitignore"
 			}
 		},
 		"type": "checkbox"
 	},
+	"initPrettier": {
+		"initPrettier": {
+			"file1": {
+				"zone": "root",
+				"fileSource": "./src/templates/root/.prettierrc.json",
+				"fileDest": "./.prettierrc.json"
+			},
+			"file2": {
+				"zone": "root",
+				"fileSource": "./src/templates/root/eslint.config.mjs",
+				"fileDest": "./eslint.config.mjs"
+			}
+		},
+		"type": "checkbox"
+	},
 	"addNodemon": {
 		"addNodemon": {
-			"npm": ["nodemon"],
+			"run": {
+				"zone": "backend",
+				"command": ["npm install nodemon"]
+			},
 			"file": {
+				"zone": "backend",
 				"fileSource": "./src/templates/nodemon/nodemon.json",
 				"fileDest": "nodemon.json"
 			},
 			"json": {
+				"zone": "backend",
 				"path": "package.json",
 				"default": {
 					"scripts": {
@@ -74,13 +110,16 @@
 	},
 	"addJQuery": {
 		"cdnJQuery": {
-			"run": ["echo 'Not implemented yet"]
+			"run": { "zone": "frontend", "command": ["echo 'Not implemented yet"] }
 		},
 		"localJQuery": {
-			"npm": ["jquery"],
-			"run": [
-				"{ echo 'import $ from \"jquery\"'; cat ./index.js; } > ./tempfile && mv ./tempfile ./index.js"
-			]
+			"run": {
+				"zone": "frontend",
+				"command": [
+					"npm install jquery",
+					"{ echo 'import $ from \"jquery\"'; cat ./index.js; } > ./tempfile && mv ./tempfile ./index.js"
+				]
+			}
 		},
 		"type": "checkbox"
 	}
