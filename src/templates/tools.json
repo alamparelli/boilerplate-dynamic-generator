@@ -39,18 +39,18 @@
 	"addDotEnv": {
 		"addDotEnv": {
 			"run": {
-				"zone": "root",
+				"zone": "backend",
 				"command": ["npm install dotenv"]
 			},
 			"file1": {
 				"zone": "root",
 				"fileSource": "./src/templates/dotEnv/.env",
-				"fileDest": "./.env"
+				"fileDest": "./backend/.env"
 			},
 			"file2": {
 				"zone": "root",
 				"fileSource": "./src/templates/dotEnv/.env.exemple",
-				"fileDest": "./.env.exemple"
+				"fileDest": "./backend/.env.exemple"
 			}
 		},
 		"type": "checkbox"

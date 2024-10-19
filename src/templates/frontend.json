@@ -5,8 +5,13 @@
 	"selectFrontend": {
 		"type": "radio",
 		"reactjs": {
-			"run": { "zone": "frontend", "command": ["npx create-react-app ."] },
-			"npm": ["eslint-plugin-react-hooks eslint-plugin-react @eslint/compat"]
+			"_devComment": "OLD command : npx create-react-app .",
+			"run": {
+				"zone": "frontend",
+				"command": [
+					"npm create vite@latest . -- --template react && npm install && npm install eslint-plugin-react-hooks eslint-plugin-react @eslint/compat"
+				]
+			}
 		},
 		"noFrontend": {
 			"run": {

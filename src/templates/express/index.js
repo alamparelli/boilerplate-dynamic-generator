@@ -1,13 +1,17 @@
-import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
+import cors from 'cors';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import 'dotenv/config';
+
 // import rateLimit from 'express-rate-limit';
 
 import userRoutes from './routes/userRoutes.js';
+import authentication from './routes/authentication.js';
 
 const app = express();
-const port = 3000;
+const port = process.env.BACKEND_PORT;
 
 // const limiter = rateLimit({
 // 	// in 1 minute allow 30 Requests for 1 IP
@@ -17,14 +21,21 @@ const port = 3000;
 // 	legacyHeaders: false,
 // });
 
-app.use(cors());
+app.use(
+	cors({
+		origin: ['http://localhost:3000', 'http://localhost:5173'],
+		credentials: true,
+	})
+);
 app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.disable('x-powered-by');
 
-app.use('/api/users', userRoutes);
+app.use(userRoutes);
+app.use(authentication);
 
 app.listen(port, () => {
 	console.log(`Server running on http://localhost:${port}`);

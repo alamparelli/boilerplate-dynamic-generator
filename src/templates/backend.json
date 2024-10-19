@@ -8,7 +8,7 @@
 				"zone": "backend",
 				"command": [
 					"npm install express cors helmet express-validator",
-					"mkdir ./routes"
+					"mkdir ./routes ./controllers"
 				]
 			},
 			"file": {
@@ -23,6 +23,25 @@
 			}
 		},
 		"type": "checkbox"
+	},
+	"addAuth": {
+		"type": "checkbox",
+		"addAuth": {
+			"run": {
+				"zone": "backend",
+				"command": ["npm install bcrypt jsonwebtoken cookie-parser"]
+			},
+			"file1": {
+				"zone": "backend",
+				"fileSource": "./src/templates/express/authentication_userRoutes.js",
+				"fileDest": "./routes/authentication.js"
+			},
+			"file2": {
+				"zone": "backend",
+				"fileSource": "./src/templates/express/authentication_controllers.js",
+				"fileDest": "./controllers/authentication.js"
+			}
+		}
 	},
 	"addDb": {
 		"type": "radio",

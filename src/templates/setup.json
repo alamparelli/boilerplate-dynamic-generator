@@ -9,7 +9,7 @@
 				"path": "package.json",
 				"default": {
 					"scripts": {
-						"start:frontend": "npm --prefix frontend run start",
+						"start:frontend": "npm --prefix frontend run dev",
 						"start:backend": "npm --prefix backend run start",
 						"start": "concurrently \"npm run start:frontend\" \"npm run start:backend\""
 					}
@@ -22,7 +22,7 @@
 		"type": "radio",
 		"esmodule": {
 			"json": {
-				"zone": "root",
+				"zone": "backend",
 				"path": "package.json",
 				"default": {
 					"type": "module"
